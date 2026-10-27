@@ -1,0 +1,7 @@
+# Draft only. Not an approved L2 protocol.
+source: FFIEC_CDR
+target: BANK_CASH_LIQUIDITY
+external_test_period: UNSET
+vintage_mode: UNSET
+validation_authorized: false
+notes: If current amended files are used later, the label is FINAL_VINTAGE_RETROSPECTIVE_TEMPORAL_VALIDATION.

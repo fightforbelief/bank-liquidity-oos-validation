@@ -1,0 +1,5 @@
+# Draft only. Not an approved L1 protocol.
+source: NYU_CALL_REPORT
+target: BANK_CASH_LIQUIDITY
+reproduction_authorized: false
+notes: Copy exact source windows after Gate 0 and Gate 1 approval. Do not infer them here.

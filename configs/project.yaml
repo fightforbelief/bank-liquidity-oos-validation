@@ -1,0 +1,30 @@
+project:
+  name: p12-bank-liquidity-oos-validation
+  status: PROVISIONAL_RESEARCH_AUDIT
+
+data:
+  historical_source: NYU_CALL_REPORT
+  external_source: FFIEC_CDR
+  primary_target: BANK_CASH_LIQUIDITY
+  target_definition_status: NOT_VERIFIED
+  licence_status: NOT_VERIFIED
+  vintage_mode: UNSET
+  vintage_human_accepted: false
+  raw_data_download_authorized: false
+
+protocol:
+  status: DRAFT
+  human_approval: false
+  primary_metric: UNSET
+  external_test_period: UNSET
+  model_list_frozen: false
+  final_test_authorized: false
+
+compute:
+  full_model_run_authorized: false
+  max_pilot_series: UNSET
+  max_runtime_minutes: UNSET
+
+access:
+  wrds_authorized: false
+  bloomberg_authorized: false
