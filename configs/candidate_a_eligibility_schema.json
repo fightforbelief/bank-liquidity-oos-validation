@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "DRAFT_NOT_APPROVED",
+  "row_means": "eligibility key only; no forecast value",
+  "primary_key": ["entity_id", "forecast_origin", "target_quarter"],
+  "evaluable_requires": [
+    "observed_target is true",
+    "is_synthetic_grid_row is false",
+    "target_value is finite",
+    "source_reporting_date is present",
+    "the same key is evaluable under both arms"
+  ],
+  "forecast_origin": "previous natural quarter-end before the target grid timestamp",
+  "exclusion_reasons": [
+    "synthetic_grid_row",
+    "missing_target",
+    "non_finite_target",
+    "not_evaluable_on_one_arm",
+    "duplicate_entity_quarter_unresolved"
+  ],
+  "counts_this_stage": "BLOCKED_PENDING_OWNER_LICENSE_ACCEPTANCE",
+  "minimum_common_entities_proposed": 5000,
+  "below_minimum_action": "BLOCKED_PENDING_OWNER_REVIEW"
+}

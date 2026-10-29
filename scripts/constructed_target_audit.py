@@ -415,8 +415,11 @@ def run_audit():
     panel = span.join(train_stats, how="left")
     panel["train_n"] = panel["train_n"].fillna(0).astype(np.int64)
     panel["grid_len"] = (panel["max_q"] - panel["min_q"] + 1).astype(np.int64)
-    train_len = panel["grid_len"] - 1
-    gap_ratio = np.where(train_len.to_numpy() > 0, 1.0 - panel["train_n"].to_numpy() / train_len.to_numpy(), 1.0)
+    train_len = (panel["grid_len"] - 1).to_numpy(dtype=np.float64)
+    train_n = panel["train_n"].to_numpy(dtype=np.float64)
+    gap_ratio = np.ones(len(panel), dtype=np.float64)
+    positive_train = train_len > 0
+    gap_ratio[positive_train] = 1.0 - train_n[positive_train] / train_len[positive_train]
     requirements = qe_quality_requirements()
     std_ok = np.where(
         panel["train_n"].to_numpy() > 1,
@@ -508,7 +511,7 @@ def _fmt(value):
     if value is None:
         return ""
     if isinstance(value, float):
-        return format(value, ".16g")
+        return format(value, ".17g")
     return str(value)
 
 

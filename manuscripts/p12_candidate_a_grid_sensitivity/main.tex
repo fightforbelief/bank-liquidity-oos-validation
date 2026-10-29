@@ -1,0 +1,285 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[numbers]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\armA}{Arm~A}
+\newcommand{\armB}{Arm~B}
+\newcommand{\aq}[1]{\textbf{[AUTHOR QUERY: #1]}}
+
+\title{Grid construction and one-step MASE\\ for U.S.\ bank cash liquidity}
+\author{\aq{author names and affiliations}}
+\date{29 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Quarterly forecast benchmarks can change when the date grid does not land on the dates at which a series is observed. This paper reports a pre-specified paired comparison for U.S.\ bank cash liquidity, defined as cash divided by assets. \armA{} uses the audited FTSFR implementation path that fills a quarterly code with a \texttt{3mo} grid. \armB{} uses a strict calendar quarter-end grid and does not move source dates. Six frozen one-step baselines are scored with seasonal MASE. The estimand is the unweighted mean of entity-level differences, \armB{} minus \armA{}, on common entity--target pairs. It is not a test of whether the ranking of the six models is unchanged. For every model, the primary estimate is negative and the model-specific 95\% bootstrap interval lies entirely below zero: under this estimator, the quarter-end grid is associated with lower entity-level average MASE. A secondary exact-timestamp subset has the same sign. The practical equivalence margin was not set, the intervals are not multiplicity-adjusted, and the results are not a reproduction of published forecast tables.
+\end{abstract}
+
+\noindent\textbf{Keywords:} bank cash liquidity; quarterly grid; MASE; paired forecast comparison; entity-cluster bootstrap.
+
+\section{Introduction}
+\label{sec:introduction}
+
+A quarterly series is not fully described by the word ``quarterly.'' The dates on which observations are stored, the dates inserted when a period is missing, and the dates treated as forecast origins all change the training history that a one-step model sees. If a grid generator steps by three months from a 30~June or 30~September anchor, later stamps can fall on 30~March or 30~December rather than on a calendar quarter-end. A filing that remains on 31~March or 31~December then fails to join that stamp. The forecast target can become a generated date rather than the last observed filing.
+
+That mechanism is a reason to compare grids directly. The comparison in this paper holds the target definition, the baseline list, the horizon, and the scoring rule fixed, and changes the grid. Each entity contributes one mean difference, so a bank with more eligible quarters does not dominate a bank with fewer. The design can detect a grid-associated shift in a model's seasonal MASE. It cannot, by itself, say whether the ordering of several models would be the same on both grids. Those are different questions. Section~\ref{sec:question} separates them before any result is stated.
+
+The empirical setting is the bank cash-liquidity series in the open financial-market forecasting benchmark of \citet{bejarano2026ofr}. The citation follows the author list and order on the official OFR working-paper page. The local PDF spells the first author Jeremiah, and its second page orders the last two names differently from that page. The difference is retained in the project audit. It is not treated as resolved, and the PDF metadata is not described as corrected. This paper does not re-estimate that benchmark's published MASE, RMSE, or out-of-sample \(R^{2}\) tables. It uses the existing constructed series and asks how one-step MASE changes when the implementation-faithful \texttt{3mo} grid is replaced by a strict natural quarter-end grid.
+
+\section{Research question and contribution}
+\label{sec:question}
+
+The question recorded for this project asks whether relative forecasting performance remains stable when the implementation-faithful \texttt{3mo} grid is replaced by a strict natural-quarter-end grid, for pre-specified lightweight baselines of U.S.\ bank cash liquidity. ``Relative performance'' can be read as a statement about model ranking: the identity of the better model, or the order of all six models, does not change. That reading was not tested.
+
+The analysis that was run estimates, separately for each frozen model, the difference in entity-level average MASE between the two grids. The contribution is that paired estimate, its entity-cluster interval, and a secondary exact-timestamp subset, under a protocol fixed before the full-sample forecasts were seen. Model-ranking stability remains an open question. No model is selected, tuned, or declared a winner.
+
+\section{Data and target construction}
+\label{sec:data}
+
+The series is quarterly bank cash liquidity at the bank level. The target used by the audited constructor is
+\[
+y = \frac{\text{cash}}{\text{assets}},
+\]
+with assets taken from \texttt{RCFD2170} and cash taken from \texttt{RCFD0010}, or from \texttt{RCFD0071}+\texttt{RCFD0081} when \texttt{RCFD0010} is missing. Rows are kept when assets exceed \(10^{-10}\) and cash is nonnegative. The entity key is \texttt{rssdid}. Bank-holding-company cash liquidity is a different series, summed by \texttt{bhcid}, and is not used.
+
+\citet{bejarano2026ofr} describe this bank series as running from 31~March~1976 to 31~March~2020, with 23{,}862 original entities in their Table~4 and 17{,}383 retained entities in the filter statistics that their Table~15 reports for the implementation path. The project evidence matrix records that the benchmark follows \citet{drechsler2017deposits}. Those figures describe the benchmark paper and an earlier audit of the same filter. They are not the evaluation counts in Section~\ref{sec:design}.
+
+The scored target dates were read from the field \texttt{target\_timestamp} in the completed Stage~18 schedule and in the primary pair file. Across the full schedule, within each arm, and on the 85{,}205 primary keys, the earliest target date is 30~September~1981 and the latest is 31~March~2020. The 84{,}015 exact-origin keys have the same two endpoints. These dates describe scored evaluation targets. They do not replace the benchmark paper's Table~4 span, which begins on 31~March~1976.
+
+The executed quality rule requires total length 27, at least 18 finite training observations, a training sample standard deviation of at least 0.01 with divisor \(n-1\), a training gap fraction no greater than 0.6, and a one-step evaluation. The same thresholds are used on both arms. The executed filter does not winsorize. Light forward fill is applied to the training grid after the quality screen and is the source of the prepared training values. It is not applied to the evaluation target.
+
+The historical file comes from the NYU Call Report page. That page states that the data may be used for non-commercial purposes free of charge, and the project matrix records coverage of 1976--2020. The formal \texttt{licence\_status} in the project configuration remains \texttt{NOT\_VERIFIED}. The decision to use the file for this non-commercial study was an operational owner decision. It is not a legal opinion and does not authorize commercial reuse. Vintage mode was unset. The forecasts are retrospective scores on the stored file, not a claim that each value was known in real time at its report date.
+
+\section{Grid definitions and evaluation design}
+\label{sec:design}
+
+\armA{} follows the audited implementation path in the project.
+In that source, \texttt{build\_\hspace{0pt}canonical\_\hspace{0pt}grid} maps the frequency code \texttt{QE} to \texttt{3mo}.
+The fill runs from each series' own start to its own end. A display label that calls \texttt{QE} ``quarterly'' does not describe that fill. The code does not, on this path, rewrite dates merely because the frequency is \texttt{QE}. \texttt{QE-DEC} and other frequency aliases are not treated as interchangeable with this inspected \texttt{3mo} path. We did not independently establish which source commit generated the benchmark PDF or whether the original authors intentionally selected this frequency convention. Implementation fidelity here means the inspected code path, not verified author intent and not verified PDF-build provenance.
+
+\armB{} places each series on calendar quarter-ends: 31~March, 30~June, 30~September, and 31~December. Source dates are not moved onto that grid. A missing quarter is a synthetic row with a missing target. Synthetic rows are not evaluation targets.
+
+Forecasts are one step ahead. The caller supplies the evaluation timestamps. The horizon is not regenerated from a frequency alias. Each arm keeps its own origin timestamp. A common target stays in the primary comparison when the origins differ. Training for a forecast uses that arm's prepared imputed values at grid positions no later than its origin and strictly earlier than its target. Interior gaps are not deleted to shorten the grid.
+
+Table~\ref{tab:counts} reports the counts reconciled from the completed run and independently rebuilt from the saved schedule and pair file.
+
+\begin{table}[ht]
+\centering
+\caption{Evaluation counts. The primary analysis uses the common entity--target keys. Arm-only keys were scored for coverage and were not paired.}
+\label{tab:counts}
+\begin{tabular}{lr}
+\toprule
+Quantity & Count \\
+\midrule
+\armA{} eligible targets & 85{,}223 \\
+\armB{} eligible targets & 97{,}799 \\
+Primary common entity--target keys & 85{,}205 \\
+Entities in the primary common set & 17{,}377 \\
+Secondary exact-origin-and-target keys & 84{,}015 \\
+Common keys with different exact origins & 1{,}190 \\
+\armA{}-only keys & 18 \\
+\armB{}-only keys & 12{,}594 \\
+Recorded forecasts & 1{,}098{,}132 \\
+Model failures & 0 \\
+Undefined MASE denominators & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 1{,}190 different-origin keys are inside the 85{,}205. The 84{,}015 exact-timestamp keys are the complement of those 1{,}190 inside the primary set. They are not a substitute for it. Within each arm, entity--target keys do not repeat. Every recorded forecast joined its schedule row, and the arm-specific origins matched the schedule.
+
+\section{Forecasting baselines}
+\label{sec:models}
+
+The model list was fixed before the full-sample run. Each model is called once for a one-step forecast. No fallback model is attached. A failure would have remained a failure of that model; none occurred. The six constructors, in the order used throughout this paper, are:
+
+\begin{enumerate}
+\item \texttt{HistoricAverage()},
+\item \texttt{Naive()},
+\item \texttt{SeasonalNaive(season\_length=4)},
+\item \texttt{AutoARIMA(season\_length=4)},
+\item \texttt{SimpleExponentialSmoothing(alpha=0.1)},
+\item \texttt{AutoTheta(season\_length=4)}.
+\end{enumerate}
+
+\texttt{AutoTheta} is not the \texttt{Theta} constructor. No other model is added, and no parameter is chosen from the full-sample scores. The calls were made with StatsForecast~2.1.1 \citep{nixtla2026statsforecast} in an isolated Python~3.12 environment. That record is the candidate runtime for this study. It is not the package version that built the benchmark PDF.
+
+\section{MASE and the paired estimand}
+\label{sec:estimand}
+
+The only primary metric is seasonal MASE with period 4, as defined by the frozen implementation. For one forecast, the denominator is the mean absolute difference between training values four positions apart, using only finite pairs in that forecast's own training history. The target is not one of those values. If no seasonal pair exists, or the mean absolute difference is zero, MASE is undefined. No constant is added to create a defined value. Missing targets and failed forecasts are not filled in.
+
+The numerator is the absolute one-step error. An independent audit recomputed this ratio from the saved predictions and the saved training grids for all 1{,}098{,}132 forecasts. Every recomputed value matched the stored MASE.
+
+A paired key enters a model's estimate only when both arms have a finite observed target, a finite forecast, and a defined denominator. All 85{,}205 primary keys met that rule for all six models. For entity \(i\) and a given model,
+\begin{equation}
+\delta_i = \overline{\mathrm{MASE}}_{B,i} - \overline{\mathrm{MASE}}_{A,i},
+\label{eq:delta}
+\end{equation}
+where each mean is taken over that entity's valid paired targets. The reported estimate is the unweighted arithmetic mean of \(\delta_i\) across entities that contribute at least one pair. Entities are not weighted by the number of targets. A positive value would mean higher average MASE under \armB{}. The two arm-specific denominators are allowed to differ. That difference is part of the grid contrast, because the grids change the training histories.
+
+RMSE and out-of-sample \(R^{2}\) are not outcomes of this study.
+
+\section{Entity-cluster bootstrap inference}
+\label{sec:bootstrap}
+
+Uncertainty is an entity-cluster bootstrap specified before the forecasts were seen. For each model, entities are drawn with replacement from that model's estimation sample. Every valid pair belonging to a drawn entity is kept, and~\eqref{eq:delta} is averaged again with the same unweighted rule. There are 2{,}000 replicates. The generator is a fresh NumPy \texttt{Generator(PCG64(20261027))} for each model. The primary analysis and the secondary analysis do not share those streams. The interval is the 2.5 and 97.5 percent sample quantiles of the replicate estimates. NumPy~2.0.2 computed those quantiles with method \texttt{linear}. The NumPy~2.0 manual identifies that method with definition~7 of \citet{hyndman1996quantiles}.\footnote{\url{https://numpy.org/doc/2.0/reference/generated/numpy.quantile.html}, accessed 29~October~2026.}
+
+A replicate that is not finite is counted as failed and is not replaced by zero. In both analyses, every model had 2{,}000 valid replicates and no failed replicate. The six intervals are six separate intervals. They were not adjusted to control a familywise error rate, and they are not a joint confidence region.
+
+The practical equivalence margin is \texttt{NOT\_SET}. An interval that excludes zero is a detectable difference under this estimator. It is not a finding that the difference is smaller than a pre-chosen margin, because no such margin was set.
+
+\section{Primary results}
+\label{sec:results}
+
+Table~\ref{tab:primary} rounds the primary estimates to four decimal places. The recorded values are in Appendix~\ref{app:exact}. All six estimates are negative, and all six intervals lie entirely below zero. In the sign convention of~\eqref{eq:delta}, the natural-quarter-end grid is associated with lower entity-level average MASE than the \texttt{3mo} grid for each of the six baselines. The models are listed in the frozen order. They are not sorted by the estimate.
+
+\begin{table}[ht]
+\centering
+\caption{Primary estimates. Each entry is the unweighted mean of entity-level MASE differences, \armB{} minus \armA{}, on 85{,}205 common targets and 17{,}377 entities. Intervals are model-specific 95\% percentile intervals from 2{,}000 entity resamples. Displayed values are rounded to four decimal places.}
+\label{tab:primary}
+\begin{tabular}{lrrr}
+\toprule
+Model & Estimate & Lower & Upper \\
+\midrule
+HistoricAverage & $-0.0043$ & $-0.0086$ & $-0.0006$ \\
+Naive & $-0.0108$ & $-0.0153$ & $-0.0069$ \\
+SeasonalNaive & $-0.0036$ & $-0.0077$ & $-0.0003$ \\
+AutoARIMA & $-0.0106$ & $-0.0145$ & $-0.0070$ \\
+SimpleExponentialSmoothing & $-0.0067$ & $-0.0112$ & $-0.0031$ \\
+AutoTheta & $-0.0116$ & $-0.0158$ & $-0.0076$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Secondary sensitivity analysis}
+\label{sec:secondary}
+
+The secondary analysis repeats the same estimator and the same bootstrap on the 84{,}015 keys whose origin timestamps and target timestamps both agree across arms. The 1{,}190 common keys with different exact origins stay in the primary analysis and stay out of this subset. Table~\ref{tab:secondary} uses the same rounding and the same model order. All six secondary estimates are negative, and all six secondary intervals lie entirely below zero. The direction agrees with Section~\ref{sec:results}. This subset does not replace the primary estimand, and agreement in sign is not evidence about model ranking.
+
+\begin{table}[ht]
+\centering
+\caption{Secondary estimates on the 84{,}015 exact-timestamp keys. The entity count remains 17{,}377. Intervals use a fresh generator for each model, separate from the primary analysis. Displayed values are rounded to four decimal places.}
+\label{tab:secondary}
+\begin{tabular}{lrrr}
+\toprule
+Model & Estimate & Lower & Upper \\
+\midrule
+HistoricAverage & $-0.0051$ & $-0.0093$ & $-0.0019$ \\
+Naive & $-0.0031$ & $-0.0060$ & $-0.0010$ \\
+SeasonalNaive & $-0.0043$ & $-0.0084$ & $-0.0012$ \\
+AutoARIMA & $-0.0027$ & $-0.0058$ & $-0.0003$ \\
+SimpleExponentialSmoothing & $-0.0069$ & $-0.0108$ & $-0.0036$ \\
+AutoTheta & $-0.0042$ & $-0.0077$ & $-0.0011$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The paired design attributes a MASE difference to the grid contrast for a named model: the target definition, the horizon, and the constructor stay fixed, while the grid changes the origins, the inserted dates, and the training histories. Because every primary interval is entirely negative, the data and this estimator do not support a claim of no difference for any of the six models. They also do not support a claim that one model is best. A larger negative estimate is not a ranking. The models were not compared with one another.
+
+The magnitude should be read as a difference in seasonal MASE, not as a percentage of cash or a dollar effect. No practical margin was pre-specified, so the paper does not classify the differences as large or small in an economic sense. The secondary subset, which removes the 1{,}190 pairs whose origins differ, still has intervals below zero. That check says the sign is not produced only by those 1{,}190 keys. It does not say the two grids are interchangeable.
+
+Two earlier facts keep the result from being read as a rerun of the published benchmark. First, implementation fidelity refers to the inspected code path. It is not verified author intent, and the commit that generated the benchmark PDF was not established. Second, the published MASE, RMSE, and out-of-sample \(R^{2}\) tables were not recomputed.
+
+\section{Limitations}
+\label{sec:limitations}
+
+The following limits are part of the result, not caveats added after the fact.
+
+\begin{enumerate}
+\item The estimates are grid-associated differences in model-specific MASE. They are not estimates of a structural effect of ``using quarter-ends.''
+\item The study does not test whether the ranking of the six models is the same under both grids.
+\item Formal equivalence was not authorized, and the practical equivalence margin remains unset.
+\item The association is not a causal identification result.
+\item The paper is not a replication of published Tables~6--8 in \citet{bejarano2026ofr}.
+\item The six intervals are not a multiplicity-adjusted joint statement.
+\item The findings are tied to this target, this constructed file, these two grids, these six constructors, this matching rule, and this unweighted entity estimator.
+\item The exact-timestamp analysis is a sensitivity subset. The primary estimand retains the 1{,}190 different-origin keys.
+\item No new model, tuning step, or third grid was introduced after the results were seen.
+\item Nothing in the design says that another quarterly forecasting problem will show the same sign.
+\end{enumerate}
+
+\section{Reproducibility and data-use statement}
+\label{sec:reproducibility}
+
+The full-sample forecasts and the independent audit were completed before this manuscript was drafted. This drafting stage did not fit models or draw a new bootstrap. The author and affiliation line remains an author query, so this file is not a submission-ready manuscript. The forecast environment was Python~3.12 with NumPy~2.0.2 and StatsForecast~2.1.1. The bootstrap seed is \texttt{20261027}. The forecast-process clock recorded at completion is 35{,}669.435 seconds, excluding an earlier schedule build of 227.908 seconds. Peak memory for the whole forecast process was not measured.
+
+The full-sample data-use decision is a pass for this non-commercial research run.
+The machine token is {\small\path{PASS_FOR_FULL_SAMPLE_NONCOMMERCIAL_RESEARCH}}.
+It is based on the cached non-commercial-use sentence and a separate owner authorization.
+The configuration field \path{licence_status} remains \path{NOT_VERIFIED}. File hashes for the protocol, the result files, and the audit manifest are recorded beside this manuscript. The manuscript does not contain bank identifiers.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Under the pre-specified paired estimator, the natural-quarter-end grid is associated with lower entity-level average MASE than the FTSFR implementation-faithful \texttt{3mo} grid for each of the six baseline models. The exact-timestamp subset has the same direction. The motivating question of whether model rankings remain stable was not the estimand. Equivalence was not tested, the intervals were not adjusted as a family, and the published forecast tables were not reproduced.
+
+\appendix
+\section{Recorded estimates}
+\label{app:exact}
+
+Tables~\ref{tab:primary-exact} and~\ref{tab:secondary-exact} repeat the values stored in the result files and matched by the independent audit. Rounding in the main text is only for display.
+
+\begin{table}[ht]
+\centering
+\caption{Primary estimates at the recorded precision. Lower and upper endpoints are the 95\% Type~7 percentiles.}
+\label{tab:primary-exact}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
+\toprule
+Model & Estimate & Lower & Upper \\
+\midrule
+HistoricAverage & $-0.0042836168277380965$ & $-0.008591823072073467$ & $-0.000610951458628103$ \\
+Naive & $-0.010815696110028986$ & $-0.015259849607384432$ & $-0.006857415193080016$ \\
+SeasonalNaive & $-0.003606282624498774$ & $-0.00774629104284172$ & $-0.0002676458368803533$ \\
+AutoARIMA & $-0.010605197991587254$ & $-0.014542165346988973$ & $-0.006979203762667186$ \\
+SimpleExponentialSmoothing & $-0.006683875293450963$ & $-0.011230451149514731$ & $-0.0031313732278946617$ \\
+AutoTheta & $-0.011553343325476726$ & $-0.015839678595276144$ & $-0.0076307394386690534$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Secondary estimates at the recorded precision.}
+\label{tab:secondary-exact}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
+\toprule
+Model & Estimate & Lower & Upper \\
+\midrule
+HistoricAverage & $-0.005146063610992731$ & $-0.009309246208334955$ & $-0.0018545657326141576$ \\
+Naive & $-0.0030933316554803522$ & $-0.005993370429479462$ & $-0.0009705320831359538$ \\
+SeasonalNaive & $-0.004292877329541734$ & $-0.008381815923470195$ & $-0.0011985408033110146$ \\
+AutoARIMA & $-0.0027435544033859705$ & $-0.0057947322924701795$ & $-0.0002886055457325237$ \\
+SimpleExponentialSmoothing & $-0.006850795719796667$ & $-0.010837846649293232$ & $-0.003632336809802309$ \\
+AutoTheta & $-0.004192768516977067$ & $-0.007726973843804417$ & $-0.001124889815428928$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Matching, imputation, and the bootstrap}
+\label{app:methods}
+
+A primary key is an entity together with an exact target timestamp. Each arm stores its own origin timestamp and its own origin quarter. The pair is kept when the target timestamps agree, including when the origin timestamps differ. The secondary key also requires the origin timestamps to agree. Unmatched targets are not given an invented counterpart.
+
+Training values are the prepared imputed series. Positions after the origin, and the target itself, are excluded. Leading positions that are still missing after imputation are omitted. A later missing position is not dropped, because dropping it would compress the seasonal spacing. The denominator then uses lags of four in that retained list.
+
+The bootstrap indexes entities in the order of their first appearance in the saved pair file, which is the order used to form \(\delta_i\). Each model starts a new \texttt{PCG64} generator at seed \texttt{20261027}. The independent audit reproduced the stored point estimates and both endpoints from the stored MASE values and, separately, from MASE recomputed from the training grids.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

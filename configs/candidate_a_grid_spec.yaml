@@ -1,0 +1,60 @@
+schema_version: 1
+status: DRAFT_NOT_APPROVED
+research_question: >-
+  Do the relative forecasting performances of pre-specified lightweight
+  baselines for U.S. Bank Cash Liquidity remain stable when the FTSFR
+  implementation-faithful 3mo grid is replaced by a strict natural-quarter-end grid?
+arms:
+  A_IMPL_3MO:
+    label: current implementation-faithful path
+    not_the_label: original paper code
+    source_repository: jmbejara/ftsfr
+    source_commit: e740156e22b04498c74525f8db6b95f359ab596a
+    source_commit_identity_vs_paper_pdf: NOT_CHECKED
+    function: build_canonical_grid
+    frequency_code: QE
+    fill_gaps_freq: 3mo
+    start: per_serie
+    end: per_serie
+    join: left
+    remap_unmatched_values: false
+    dependency_versions_used_in_audit:
+      python: 3.12.10
+      pandas: 2.2.3
+      utilsforecast: 0.2.16
+      polars: 1.31.0
+    paper_dependency_versions: NOT_CHECKED
+  B_NATURAL_QE:
+    label: strict natural calendar-quarter-end grid
+    quarter_ends: [March 31, June 30, September 30, December 31]
+    move_source_dates: false
+    missing_quarter: synthetic row with missing target
+    duplicate_entity_quarter: raise DuplicateEntityQuarter
+quality_thresholds_source:
+  file: upstream_src/robust_preprocessing.py
+  function: get_data_requirements
+  call: get_data_requirements("QE", 1, 4)
+  sha256: 52503024b7f4a5717bdb4d783b43645f51efad1d96c15429deb3fdbce745ef3c
+  copied_results:
+    min_total_obs: 27
+    min_train_obs: 18
+    min_test_obs: 1
+    variance_threshold: 0.01
+    variance_statistic: sample standard deviation ddof=1
+    max_gap_ratio: 0.6
+    min_test_completion_ratio: 0.75
+  same_thresholds_on_both_arms: true
+  owner_approval: NOT_PROVIDED
+fields:
+  - source_reporting_date
+  - grid_timestamp
+  - calendar_quarter
+  - observed_target
+  - target_value
+  - is_synthetic_grid_row
+  - source_row_id
+  - arm_id
+winsorization_in_datasets_toml: [5.0, 95.0]
+winsorization_in_executed_filter: false
+forward_fill_in_full_pipeline: light_train_imputation after the quality filter
+forward_fill_approved_for_candidate_a: false
