@@ -56,3 +56,10 @@ decisions/
 *.jpg
 *.jpeg
 experiments/preflight/
+
+# Post-hoc protocol and handoff notes are part of the pre-registration commit
+!/supplementary/POSTHOC_PROTOCOL.md
+!/supplementary/DEVIATIONS.md
+!/supplementary/BLOCKERS.md
+!/supplementary/out/RESULTS_SUMMARY.md
+

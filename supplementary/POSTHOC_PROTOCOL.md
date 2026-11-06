@@ -1,0 +1,131 @@
+P12 post-hoc protocol, written 2026-11-06, after the pre-specified results (Tables 2-5) were seen
+and before any analysis below was run on real data.
+
+Status: exploratory. None of these analyses alters the pre-specified estimand, its intervals, or
+its interpretation. No model is refitted, no forecast regenerated, no grid rebuilt for scoring.
+
+Inputs (read-only): 
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/schedule.parquet SHA-256 77304491a620a019e8e739525380777818a08161d2b9fe1b543a2428bb1ec0a4
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/primary_pairs.parquet SHA-256 a083f85faa8f49783d08308dfe29157b9b6c3dcf004198cda61202578840273f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/prepared_series.parquet SHA-256 1dd7f52a3963bbe7cbe82e29c96ef0b9d4e93b291f9481c2d217b5d924c00b0a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/primary_results.json SHA-256 9be33d783046458b0fcbdfa7d12548518d38eaf7f0255e837ec7b71508a51434
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/secondary_results.json SHA-256 6b819d96e4e9521a1eed43eb900fb2c7da87cc6adb79df81f6aa7c925d74bbe6
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00001.parquet SHA-256 31313aa4000bc346add4b08e3d254823249da65a2ec65d208fa7d188c460ac9e
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00002.parquet SHA-256 286322eab611504e8605b7cb55691a22708932fe2620c8f465d2b4880b1c2796
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00003.parquet SHA-256 f109087ed485080fabb1459162ac3df9ee8449634fc6e98a910f046db20a2da6
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00004.parquet SHA-256 20522ae050bd9d09e8b1383fb813159f9819853c7a71207f9a48fc3144e389b1
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00005.parquet SHA-256 cc7311b890bb787adeff9c988daae6cd96d23a0e3e621a66fd8ac3b7eaccbe5f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00006.parquet SHA-256 66f5db4875edcb946f8dd14b9275ba5849dee3e65cdfec0446761d4b71e7c763
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00007.parquet SHA-256 555bb700973bff111ecfb6d9e74151caa44cee649c4d74c8bb594dcc8bf140bb
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00008.parquet SHA-256 9b9ac3da17bebc6e9e97ab7adbf10a5a69e3795c7e97cf87489b8c9389ddac1b
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00009.parquet SHA-256 351c48c18b84141973bb35432d37edd059db2f649c9c4b5e3be8a761eb844abf
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00010.parquet SHA-256 d1f51bb54b7f07d44165a17fd1f5a18ca0806d6bc025fd44a9e07140b34d2f28
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00011.parquet SHA-256 6a813c28d6d6ac2dc091a60036ca191d70fd91b4ce9f80ee8eff7233b5fc737f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00012.parquet SHA-256 e0f3979d322710bb3459d309d8d51670abf7c54be6f20e7a10717989ce8389fb
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00013.parquet SHA-256 7719bb24b44f967215df8a6a9940e2602362416818c5e79536c4075f8dfb6b6a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00014.parquet SHA-256 44f7bf96987e9e104b1b04ec0d639fc549a7eb945a7b908e10fca2fbc52b880c
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00015.parquet SHA-256 0387a3bdd69db6b3505df686122806d991e2ac0977a9044c9467038a4a3be06a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00016.parquet SHA-256 fe638e83d594aac35ccf987be4a3f2b33f95b682d7bafa4d3b6ad42f21dd8357
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00017.parquet SHA-256 f50587d3bb3cdf609a78ddfc1478fdcf09e2e9d2425ebc20d146cf2be0b02af2
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00018.parquet SHA-256 1a281bacf3ad9f7745b80e058a96aead12e96308b333c6815cdacff298b761df
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00019.parquet SHA-256 969172054ffc20f3092043fd286aa7dee4cdbaa46a88623fc3ca048146d662ea
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00020.parquet SHA-256 1caffc3aba390dd593ac29d05fd297078934ce9e98449d2147f2fecfc4c6bc8e
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00021.parquet SHA-256 fc7acabb6efb283afd3e1c60636961c76be2a2cc4e9bf6f1206b55910cee5e53
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00022.parquet SHA-256 acd0b16fa5dbdc8639d6ecffa7766192d3108c12ba8fe9635fe4905aad77230c
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00023.parquet SHA-256 2d4f338951c4e7d81c8bf5bc69ff4b4f926b05f11eb207a34063b0cb52867e46
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00024.parquet SHA-256 7b9e358d50e2ab0fdf52c9621985143e37c1f6a7e26baf7aa6ccfd2d1b0d9f31
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00025.parquet SHA-256 fafa2af8bbcc3fb8f6a7dfa33b0d8584de06bdab2e487bdcbe1b0646df923c13
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00026.parquet SHA-256 dbdb30e49111b6e6f3bd73ca5c077787f43b8c77cdbed0532233b6f280d183cd
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00027.parquet SHA-256 62ba2fae7e4dd5fd88c21b2b7115522a39c2da5ba8e63723d5277a78833666d0
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00028.parquet SHA-256 2f6239b0168fda2216740122cacc312c3af24e4eeab3c806d44297fcfb5ade75
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00029.parquet SHA-256 dee47016cb58febbe85f0c693dfee338e0372e259f1ae291c25a82fc11594b1f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00030.parquet SHA-256 e9710a5f5a819a3f8ddc5431830878971369f5ca06690fada6ad52849496b02e
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00031.parquet SHA-256 bf8aeaee669e81054f42b09ede1bb3c24988b1ce609b73ec8b1e6fc13f2fea07
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00032.parquet SHA-256 6c60ee237faaef6f6e55f4a510129cb053c1c1dc45d9d7f44a6fe58253d6d142
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00033.parquet SHA-256 cd982899ed1fe6ecaacc927ee9c514675a6f3c3241d56639f7b2e519af8397cd
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00034.parquet SHA-256 29d1ee2d88a47ee3133c650c1a6d7d070d8d4754737fa5eb39856a2cb2f068e7
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00035.parquet SHA-256 181746a1ffafbb4699eb8dab100dce2036b3395a187b4f49e39df3e3d218de8d
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00036.parquet SHA-256 bc1d3b271488d33985c659aa6fda936df95be3fa2fe1acaeee8a96673b693251
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00037.parquet SHA-256 0c2d15a6d4eabb9fb3d29062ecb8060d885c6054ffd3c876ea3a798e37393e2a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00038.parquet SHA-256 8b65b95ea80ad3ffa3d3f48288cd97c97395dcea2dd642115140f931000e20cc
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00039.parquet SHA-256 4373f826fb0ecb0f53ce7fe87b5062aca7298581659ad9aebe17a4cd3131a19d
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00040.parquet SHA-256 91611cec76d054c3828761c0d272b0aca57a16ac467354b1677cea7c13a03439
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00041.parquet SHA-256 50599c49fb840cce9681ed1addb26f425fa16099af52981cb7a079b4a9616bcf
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00042.parquet SHA-256 057788e15438cb51645cd0a7f9b34f41c68b5f581376580b8abf74e66ea4d0e7
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00043.parquet SHA-256 8219b4da6d7a464b781d9ef4292ff9173e63bcb899d6c40971a39c7b0cb7ff77
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00044.parquet SHA-256 4959b037e06ae71488f9ebcde546e68f2c7cc76d49755cd9e04d8d207a2fce49
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00045.parquet SHA-256 833d3f08bdd6913cb1d975df17f27b9965976cf47159550faac4a101250a7146
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00046.parquet SHA-256 6167efa41aab3877dfc605c4ef845a55b30b318bdd8cb2d17a6d7e49293d14bb
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00047.parquet SHA-256 2f0b7acddd9df3112960a0a938eda7fe6d5c56600af92d4a2f3750336ec8253a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00048.parquet SHA-256 e525178fa707e93f478da5a7a22cf8258d94ab4b1ebf6bdfe35538f875cff349
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00049.parquet SHA-256 e527c0e8395156246685183fc002c3509e7ce83d4e67584f833fe3e01daeb1b3
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00050.parquet SHA-256 ace688f864c8783003451486d14a6da3b3f9b448cb7448b58cd56f37ea7bbd76
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00051.parquet SHA-256 585b1150c63aac3c8903f3c1366827c75d830df390d4fcf43311addee163b0c1
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00052.parquet SHA-256 b07c635853f82024d8dc0ef56adda012bcceec6807be51b97a8cd0288a72155a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00053.parquet SHA-256 46c4e0b58526c68612b3ec3ecbe4331c3e5726380cff37fbd074e54e6a18077b
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00054.parquet SHA-256 ef2882cbf82d04dd862a57e61c958774730ee7926d2d1560db633897785bc0e3
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00055.parquet SHA-256 e9a3924ad0966a93cfa7542f546eb2db48d23e8444c4f5d220b6468b0d0bbe0b
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00056.parquet SHA-256 a04eb29000d0b83b63f0a18f540a298c94872693e7e892f39ee9966ba8efff02
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00057.parquet SHA-256 b59970eda491bf6daba24229f9d2b7b439ebe0f0ac655cc3a358982d988c7639
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00058.parquet SHA-256 179634d72057e9458f0c6ab6065b21a576eea94bbe26fe75b57e247556a162d9
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00059.parquet SHA-256 6ce1e33871232f649974abc4c0682db5fca48457fa9432457f288fd1f473626a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00060.parquet SHA-256 8e950953bb8da0b2bc5b5ebfe0cc9c73ce55ff9ce9a2236972dfb2f63c789b0c
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00061.parquet SHA-256 d4ca04c17464587a2df1bf1fae21255fe61ec7921f3016fb695993b81503cfc5
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00062.parquet SHA-256 31a2032bfa77455f501f8fbc53882e456cdacdf18810cb450bc385b1f8ab4467
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00063.parquet SHA-256 c2e377ef7afcfa3abb8bcc3fb7e0b8950345d86983625c688cdc1c2720511064
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00064.parquet SHA-256 77cdce2398010258769c76af2511bab910f5293e22234304d16198c3c9e27c9b
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00065.parquet SHA-256 11753214d1c1c40383ab43472b918f1f8ad86e8c95caa58366cd7e131d81fbed
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00066.parquet SHA-256 fec403b1d77ab4fa35a089c9c912563ae098e0741a3384d5a20457c8d96fae5a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00067.parquet SHA-256 bcbdb2fdb9a0967bcf6840ab24b6459b6196bb0f65b3ef74800ead74d557f16a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00068.parquet SHA-256 1db2bc95dcda0b43ce5a6212e106c1bb4a2274822c3990f19921b60cebd6c97a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00069.parquet SHA-256 f078eb3d80288fb259b2678219b99fa3a2ed2d648577a7da019a441d724b8ba2
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00070.parquet SHA-256 01763a526bcb9d4a2bf3ae620610958a6a10a1e24577d5ac5a0054677214a20e
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00071.parquet SHA-256 aedaf3adda364094dd0ebfc9160b01a6e8365aaec517dcd96ea5938851428a47
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00072.parquet SHA-256 d8e4c434088e85f71b71563f40e4d0e00eaa1002092358922878f73fa6a33f3e
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00073.parquet SHA-256 e90e739bef3e38fcf4aa82d05860fb7bb7a1fb1f396f7cc9113bd10a54b63558
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00074.parquet SHA-256 3fef4dfff698989cd289a9cc2273abf57fa52acaf2f2c154bd7c4a96f74998c5
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00075.parquet SHA-256 c308b63d850159de458c2a46f91c9eea6e2fa46aae082316cd49145b2af659d0
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00076.parquet SHA-256 38ba3ee2105e60ec6e6376308958a609ac71329f58e5fdc7c2587bbd1d1fc222
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00077.parquet SHA-256 6c7ca2e5a6274d30438cd89e7bcceedaac34dbbcb21bcc5fa3445c611f4c337a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00078.parquet SHA-256 8db7b3fb85f683799fef22fc8fa244e018bdb15cc9121ef75c938f13d46151ef
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00079.parquet SHA-256 62615d1295929d93c44edad2434c765489f9cbecfe786fd59d24f904a665b84f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00080.parquet SHA-256 bee2b3181838e70e9e3f01cabf84ec0f78dd39c58a016e4d245c2869c86ba285
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00081.parquet SHA-256 6c4f9f0e09f80a29fce1d3790f93314166867973128a7c31c5d394349976d63f
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00082.parquet SHA-256 030d938b672260a5af8d44d0bce319421a0aad2cf6623cc3fc3013af70cb6dce
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00083.parquet SHA-256 f7d5da2956eb1fd827f161fba6315c3d36e7c7d9e1f2cf2472a684d173e44512
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00084.parquet SHA-256 bd724bf1fb46791687f041db6cdca2818cbe4cfd6f76b667fa2942a918afdcd4
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00085.parquet SHA-256 e7de1d50256cc2a21999f2376fac9067d3f8db72b7d213f4ea944ab774b05814
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00086.parquet SHA-256 ad0afdfac4bcdf1008a39430403c0922d6b66c615af25424805e5c5dd2e682b2
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00087.parquet SHA-256 9cf676e761c317010376937c644c6ef469a64f4cdb188a81368f4df504bc81b1
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00088.parquet SHA-256 b749b272a446f9d077837840389fb326ce9bf34375a413d0a741e64b18823533
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00089.parquet SHA-256 7b255a0367b4cac526206efc0c080f3ccf58d2292e7666f11c6029bbfd49209b
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00090.parquet SHA-256 47baf1cbf2246777d4683b957969a8a9d4ff3d1f3cba45b2862e608e0198c2bf
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00091.parquet SHA-256 d405a015a28e447783762344192e6c08af06dbd526f259cf51d0d058d33b05d2
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00092.parquet SHA-256 1013c6eb84bbe391c6fda676bfa15cf4b691bf75e27b083f4ff6377010553103
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00093.parquet SHA-256 3d8a981e2f36ae833bbceb2435a4f0c3cdaaef547cc17f65fe7886a18e4e2430
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00094.parquet SHA-256 a9412ea216e2b6ac7a3b9f627111e84588f32cc886394757674413394c4f88aa
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00095.parquet SHA-256 4f65dedd9c0edb499fd16246dc8c468267ec986826ad1f429933940100074bf3
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00096.parquet SHA-256 b09e92fdab846732df0e9276c21a33a6af9314d21a84a71c68d1f222ce90566a
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00097.parquet SHA-256 506c111b74cf40a768197223e3623c1877ba9ec3d0669f32f009d7896e230f47
+- C:/Users/hanqi/Desktop/projects/_p12_stage18_full_run/run_20261028/batches/batch_00098.parquet SHA-256 c62ce95f2f14444e3d68f52fcf37acee4b399f420b4f88fb69a7a3e9bc5a0169
+
+Gate: reproduce the 36 pre-specified values in Tables 4-5 exactly with seed 20261027; otherwise stop.
+
+Analyses, on the 85,205 primary common keys and 17,377 entities, per model, in the frozen order:
+  A1 MASE levels and relative change (estimate / mean entity MASE on Arm A).
+  A2 Distribution of delta_i: quantiles 5/25/50/75/95, sign shares, median, 5% trimmed mean.
+  A3 Exact Shapley split of delta into an error term and a scale term; unscaled MAE change;
+     lag-4 zero-difference and imputation shares by arm.
+  A4 Exact split of the primary estimate into different-origin and same-origin contributions;
+     origin synthetic share and staleness by arm.
+  A5 Ranking stability: per-entity Kendall tau-b, same-best share, identical-ranking share,
+     mean ranks, aggregate order by mean entity MASE.
+  A6 Coverage (model-independent): Arm A grid stamp month-days, anchor dependence, unjoined filings,
+     rule-based classification of the 12,594 Arm B-only and 18 Arm A-only keys.
+
+Inference: entity-cluster bootstrap, 2,000 replicates, the project's exact draw function, fresh
+PCG64(20261106) per model per analysis, type-7 percentile 95% intervals, non-finite replicates
+counted as failed and not replaced. Intervals are not multiplicity-adjusted. No equivalence margin.
+
+No additional models, metrics, grids, subsets, or seeds will be added after results are seen;
+any deviation is logged with a date in DEVIATIONS.md.
