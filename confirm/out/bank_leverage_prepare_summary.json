@@ -1,0 +1,90 @@
+{
+  "label": "CONFIRMATORY_QE_REPLICATION_RUN",
+  "target": "bank_leverage",
+  "arm_a": {
+    "grid_rows": 1862031,
+    "grid_entities": 22965,
+    "observed_exact_date_rows": 1748629,
+    "synthetic_or_unmatched_grid_rows": 113402,
+    "source_rows_absent_from_grid": 101328,
+    "finite_value_on_non_source_date": 0,
+    "first_failure": {
+      "train": 480,
+      "total": 3633,
+      "std": 8,
+      "pass": 17295,
+      "gap": 76,
+      "test": 1473
+    },
+    "entities_after_quality_filter": 17295,
+    "entities_removed_by_post_imputation_validation": 0,
+    "entities_after_imputation": 17295,
+    "classical_filter": {
+      "pass": 17295
+    },
+    "final_eligible_entities": 17295,
+    "final_rows": 1663366,
+    "observed_finite_rows_in_final_frame": 1635054,
+    "synthetic_rows_in_final_frame": 28312,
+    "panel_min_length": 27,
+    "panel_n_windows": 6,
+    "target_rows_in_window": 103770,
+    "valid_observed_targets_in_window": 84898,
+    "entities_with_a_valid_target": 17295,
+    "entities_with_no_valid_evaluation_origin": 0,
+    "target_month_day_counts": {
+      "03-31": 26636,
+      "09-30": 24169,
+      "06-30": 24317,
+      "12-30": 758,
+      "12-31": 26810,
+      "03-30": 1080
+    }
+  },
+  "arm_b": {
+    "grid_rows": 1862031,
+    "grid_entities": 22965,
+    "observed_exact_date_rows": 1849957,
+    "synthetic_or_unmatched_grid_rows": 12074,
+    "source_rows_absent_from_grid": 0,
+    "finite_value_on_non_source_date": 0,
+    "first_failure": {
+      "std": 12,
+      "train": 33,
+      "gap": 18,
+      "total": 3633,
+      "pass": 19269
+    },
+    "entities_after_quality_filter": 19269,
+    "entities_removed_by_post_imputation_validation": 0,
+    "entities_after_imputation": 19269,
+    "classical_filter": {
+      "pass": 19269
+    },
+    "final_eligible_entities": 19269,
+    "final_rows": 1805420,
+    "observed_finite_rows_in_final_frame": 1796873,
+    "synthetic_rows_in_final_frame": 8547,
+    "panel_min_length": 27,
+    "panel_n_windows": 6,
+    "target_rows_in_window": 115614,
+    "valid_observed_targets_in_window": 96253,
+    "entities_with_a_valid_target": 19269,
+    "entities_with_no_valid_evaluation_origin": 0,
+    "target_month_day_counts": {
+      "03-31": 31060,
+      "12-31": 31277,
+      "09-30": 26747,
+      "06-30": 26530
+    }
+  },
+  "counts": {
+    "arm_a_eligible_rows": 84898,
+    "arm_b_eligible_rows": 96253,
+    "primary_common_keys": 84898,
+    "arm_a_only_keys": 0,
+    "arm_b_only_keys": 11355,
+    "different_origin_keys": 1080
+  },
+  "seconds": 219.9
+}

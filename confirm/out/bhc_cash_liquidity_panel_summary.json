@@ -1,0 +1,13 @@
+{
+  "raw_rows": 1919810,
+  "constant_series_removed": 3,
+  "nonfinite_after_float32": 0,
+  "rows": 832902,
+  "entities": 13770,
+  "non_quarter_end_dates": 0,
+  "duplicate_keys": 0,
+  "date_min": "1976-03-31",
+  "date_max": "2020-03-31",
+  "dta_sha256": "40692c2ec9af404b3148ffbd7ad970a4ce191d9ac8f781b415e8a10909533ad0",
+  "panel_sha256": "a217db695ec5c0f09098771b70c9325b811fb55eca28c2cc55eec1f12c691a6c"
+}

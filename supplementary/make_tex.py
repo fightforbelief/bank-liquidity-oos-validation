@@ -67,6 +67,12 @@ def _range_tex(values: list[float], digits: int = 1, percent: bool = True) -> st
     return f"{lo:.{digits}f}--{hi:.{digits}f}{suffix}"
 
 
+def _span(values: list[float], digits: int = 1) -> str:
+    """'X for every model' when all values print the same, else 'X--Y' (non-negative values only)."""
+    lo, hi = f"{min(values):.{digits}f}", f"{max(values):.{digits}f}"
+    return lo if lo == hi else f"{lo}--{hi}"
+
+
 def _between(lo: float, hi: float) -> str:
     if lo > hi:
         lo, hi = hi, lo
@@ -94,12 +100,16 @@ def build_values(results: dict) -> tuple[dict[str, str], str | None]:
     shares = []
     for model in MODELS:
         estimate = float(decomp[model]["num_term"]) + float(decomp[model]["den_term"])
-        shares.append(100.0 * float(decomp[model]["num_term"]) / estimate)
+        share = 100.0 * float(decomp[model]["num_term"]) / estimate
+        # A share that rounds to 0.0 at the printed precision is reported as 0, not as a signed zero.
+        shares.append(0.0 if abs(share) < 0.05 else share)
     if all(0.0 <= share <= 100.0 for share in shares):
+        zero = [DISPLAY[model] for model, share in zip(MODELS, shares) if share == 0.0]
+        zero_note = f" (0\\% for {', '.join(zero)})" if zero else ""
         values["abs-decomp-summary"] = (
             "the error term accounts for "
             + _between(min(shares), max(shares))
-            + " of the primary estimate across models and the scale term for the remainder"
+            + f" of the primary estimate across models{zero_note} and the scale term for the remainder"
         )
     else:
         values["abs-decomp-summary"] = (
@@ -186,7 +196,21 @@ def build_values(results: dict) -> tuple[dict[str, str], str | None]:
         exception_sentence = "Intervals containing zero: " + "; ".join(exceptions) + "."
     else:
         exception_sentence = "Every median interval and every 5\\% trimmed-mean interval excludes zero."
-    values["dist-text"] = (
+    zero_share = [100.0 * float(dist[model]["share_zero"]) for model in MODELS]
+    pos = [100.0 * float(dist[model]["share_positive"]) for model in MODELS]
+    degenerate = all(
+        float(dist[model][key]) == 0.0
+        for model in MODELS
+        for key in ("q05", "q25", "median", "q75", "q95", "median_lo", "median_hi", "trim5", "trim5_lo", "trim5_hi")
+    )
+    if degenerate:
+        values["dist-text"] = (
+            f"For every model, $\\delta_i$ is exactly zero for {_span(zero_share)}\\% of banks, so every "
+            f"reported quantile, the median, and the 5\\% trimmed mean are zero, with bootstrap intervals of zero width. "
+            f"The share of banks with $\\delta_i<0$ is {_span(neg)}\\% and the share with $\\delta_i>0$ is {_span(pos)}\\%."
+        )
+    else:
+        values["dist-text"] = (
         f"The median of $\\delta_i$ ranges from {fnum(med_low[1])} {math_ci(dist[med_low[0]]['median_lo'], dist[med_low[0]]['median_hi'])} "
         f"({DISPLAY[med_low[0]]}) to {fnum(med_high[1])} {math_ci(dist[med_high[0]]['median_lo'], dist[med_high[0]]['median_hi'])} "
         f"({DISPLAY[med_high[0]]}). The share of banks with $\\delta_i<0$ ranges from {min(neg):.1f}\\% to {max(neg):.1f}\\%. "
@@ -198,10 +222,10 @@ def build_values(results: dict) -> tuple[dict[str, str], str | None]:
     d_abs = [1000.0 * float(decomp[model]["d_abs_err"]) for model in MODELS]
     s_share = [100.0 * float(decomp[model]["share_keys_sB_gt_sA"]) for model in MODELS]
     values["decomp-text"] = (
-        f"The error term ranges from {fnum(min(num_terms))} to {fnum(max(num_terms))} and the scale term ranges from "
-        f"{fnum(min(den_terms))} to {fnum(max(den_terms))}. "
-        f"The change in absolute error ranges from {fnum(min(d_abs))} to {fnum(max(d_abs))} times $10^{{-3}}$, "
-        f"the share of keys with $s_B>s_A$ ranges from {min(s_share):.1f}\\% to {max(s_share):.1f}\\%, "
+        f"The error term ranges from {math_num(min(num_terms))} to {math_num(max(num_terms))} and the scale term ranges from "
+        f"{math_num(min(den_terms))} to {math_num(max(den_terms))}. "
+        f"The change in absolute error ranges from {math_num(min(d_abs))} to {math_num(max(d_abs))} times $10^{{-3}}$, "
+        f"the share of keys with $s_B>s_A$ is {_span(s_share)}\\%, "
         f"and the zero lag-4 difference share is {100.0 * float(mechanism['zero_seasonal_share_A']):.1f}\\% on Arm~A "
         f"and {100.0 * float(mechanism['zero_seasonal_share_B']):.1f}\\% on Arm~B."
     )
@@ -244,15 +268,19 @@ def build_values(results: dict) -> tuple[dict[str, str], str | None]:
 
 def _tabular(spec: str, header: str, rows: list[str], footer: str | None = None) -> str:
     body = "\n".join(rows)
+    if footer and not footer.rstrip().endswith("\\\\"):
+        footer = footer.rstrip() + " \\\\"
     foot = f"\n\\midrule\n{footer}" if footer else ""
+    # \fittable (defined in paper_v2/main.tex) shrinks a tabular only when it is wider than the text.
     return (
+        "\\fittable{%\n"
         "\\begin{tabular}{" + spec + "}\n"
         "\\toprule\n"
         f"{header} \\\\\n"
         "\\midrule\n"
         f"{body}{foot}\n"
         "\\bottomrule\n"
-        "\\end{tabular}\n"
+        "\\end{tabular}}\n"
     )
 
 
@@ -282,6 +310,31 @@ def table_levels(results: dict) -> str:
 
 
 def table_dist(results: dict) -> str:
+    dist = results["distribution"]
+    quantile_keys = ("q05", "q25", "q50", "q75", "q95")
+    if all(float(dist[model][key]) == 0.0 for model in MODELS for key in quantile_keys):
+        # Every quantile is exactly zero (logged in DEVIATIONS.md, 2026-11-18): show the sign split instead.
+        rows = []
+        for model in MODELS:
+            row = dist[model]
+            rows.append(
+                " & ".join(
+                    [
+                        DISPLAY[model],
+                        pct(row["share_negative"]),
+                        pct(row["share_zero"]),
+                        pct(row["share_positive"]),
+                        f"{math_num(row['median'])} {math_ci(row['median_lo'], row['median_hi'])}",
+                        f"{math_num(row['trim5'])} {math_ci(row['trim5_lo'], row['trim5_hi'])}",
+                    ]
+                )
+                + " \\\\"
+            )
+        return _tabular(
+            "lrrrrr",
+            "Model & $\\delta_i<0$ (\\%) & $\\delta_i=0$ (\\%) & $\\delta_i>0$ (\\%) & Median [CI] & 5\\% trimmed mean [CI]",
+            rows,
+        )
     rows = []
     for model in MODELS:
         row = results["distribution"][model]
@@ -332,8 +385,8 @@ def table_decomp(results: dict) -> str:
     footer = (
         "\\multicolumn{7}{l}{Zero lag-4 difference share: "
         f"A {100.0 * float(mechanism['zero_seasonal_share_A']):.1f}\\%, "
-        f"B {100.0 * float(mechanism['zero_seasonal_share_B']):.1f}\\%. "
-        "Imputed training share: "
+        f"B {100.0 * float(mechanism['zero_seasonal_share_B']):.1f}\\%.}} \\\\\n"
+        "\\multicolumn{7}{l}{Imputed training share: "
         f"A {100.0 * float(mechanism['imputed_share_A']):.1f}\\%, "
         f"B {100.0 * float(mechanism['imputed_share_B']):.1f}\\%.}}"
     )
@@ -431,20 +484,63 @@ def table_ranking(results: dict) -> str:
     return panel_a + "\n\\vspace{0.6em}\n" + panel_b
 
 
+BONLY_LABELS = {
+    "entity_not_in_A": "Bank absent from the saved Arm~A grid",
+    "target_not_on_A_grid": "Target date is not an Arm~A stamp",
+    "target_on_A_grid_missing": "Arm~A stamp exists, value missing",
+    "failed_A_eligibility": "Fails Arm~A per-target eligibility",
+    "other": "Other",
+    "no per-entity screen log in the saved run": "screen reason not logged in the saved run",
+}
+
+
 def table_bonly(results: dict) -> str:
     payload = results["coverage"]["exclusive"]["arm_b_only"]
     total = int(payload["n"])
     rows = []
     for rule in payload["rules"]:
         count = int(rule["count"])
-        rows.append(f"{tex_label(rule['rule'])} & {count:,} & {100.0 * count / total:.1f} \\\\")
+        label = BONLY_LABELS.get(rule["rule"], tex_label(rule["rule"]))
+        rows.append(f"{label} & {count:,} & {100.0 * count / total:.1f} \\\\")
         for sub in rule["subs"]:
             sub_count = int(sub["count"])
-            rows.append(
-                f"\\quad {tex_label(sub['label'])} & {sub_count:,} & {100.0 * sub_count / total:.1f} \\\\"
-            )
+            sub_label = BONLY_LABELS.get(sub["label"])
+            if sub_label is None:
+                sub_label = f"Arm~A stamp in that quarter: {tex_label(sub['label'])}"
+            rows.append(f"\\quad {sub_label} & {sub_count:,} & {100.0 * sub_count / total:.1f} \\\\")
     rows.append(f"Total & {total:,} & 100.0 \\\\")
     return _tabular("lrr", "Reason & Count & Share (\\%)", rows)
+
+
+def coverage_followup_values(path: Path) -> dict[str, str]:
+    """Descriptive follow-up to A6 (DEVIATIONS.md, 2026-11-18). Empty when the file is absent."""
+    if not path.exists():
+        return {}
+    f = json.loads(path.read_text(encoding="utf-8"))
+    dropped = f["entities_not_in_A_schedule"]
+    kept = f["entities_in_both_schedules"]
+    n_drop = int(dropped["n_entities"])
+    first = dropped["B_first_filing_quarter_end"]
+    day30_drop = int(first.get("06-30", 0)) + int(first.get("09-30", 0))
+    kept_first = kept["B_first_filing_quarter_end"]
+    day30_kept = int(kept_first.get("06-30", 0)) + int(kept_first.get("09-30", 0))
+    n_kept = int(kept["n_entities"])
+    drift_kept = int(kept["A_grid_drift"].get("off_quarter_end_stamp", 0))
+    day30_all = day30_drop + day30_kept
+    def _count_of(k: int, n: int, noun: str) -> str:
+        return f"all {n:,} of {noun} banks" if k == n else f"{k:,} of {noun} {n:,} banks ({100.0 * k / n:.1f}\\%)"
+
+    text = (
+        f"The {int(f['b_only_keys_entity_not_in_A']):,} targets in the first row belong to {n_drop:,} banks that have "
+        f"no Arm~A grid at all. For {_count_of(day30_drop, n_drop, 'these')} the "
+        f"first filing is dated 30~June ({int(first.get('06-30', 0)):,}) or 30~September ({int(first.get('09-30', 0)):,}), "
+        f"against {day30_kept:,} of the {n_kept:,} banks present on both grids ({100.0 * day30_kept / n_kept:.1f}\\%), "
+        f"{'all' if drift_kept == day30_kept else f'{drift_kept:,}'} of which have a drifted Arm~A grid. Of the {day30_all:,} banks whose first filing falls on one of "
+        f"these two dates, {day30_drop:,} ({100.0 * day30_drop / day30_all:.1f}\\%) have no Arm~A grid. On Arm~B, "
+        f"{100.0 * float(dropped['finite_stamp_share_B_mean']):.1f}\\% of these banks' grid stamps carry a stored filing. "
+        f"The saved run does not record why these banks are absent from the Arm~A grid."
+    )
+    return {"coverage-followup-text": text}
 
 
 def write_values(values: dict[str, str], path: Path) -> None:
@@ -589,6 +685,7 @@ def write_summary(results: dict, blockers: str, deviations: str, path: Path) -> 
 
 def emit(results: dict, generated: Path, summary: Path, blockers: Path, deviations: Path) -> str | None:
     values, deviation = build_values(results)
+    values.update(coverage_followup_values(summary.parent / "coverage_followup.json"))
     generated.mkdir(parents=True, exist_ok=True)
     write_values(values, generated / "values.tex")
     write_tables(results, generated)

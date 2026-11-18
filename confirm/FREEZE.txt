@@ -1,0 +1,9 @@
+Frozen 2026-11-18T15:50:26Z before any grid, screen, schedule, or forecast for bank_leverage, bhc_leverage, bhc_cash_liquidity.
+
+91f8cc4ec515b8ebf3b0a2626882f07293db755dbdf5e53b7bb7d41e42677ccc  confirm/PROTOCOL.md
+47c32b74c5b0c503432aaf158656da120d796d8d802b46fc083455ff978f3f24  confirm/common.py
+4758e6b21930fcb68edef2b6a83654984fe74ab48321c715c35019a47d2641c6  confirm/build_panel.py
+3905b8a9297c666dfa18ca6360e53210a72f77a2a37880fb213df6604cf6764a  confirm/prepare.py
+227afbee854fb59a58d0ec205b0876cb0f681e006489735dd51464a19f4e40b6  confirm/forecast.py
+7e77333b73e2940c4e99f61daa7924965f04553b6af85899af65521a5aed04ed  confirm/analyze.py
+7ebe0a97598f7b0ff5107be4cf8c11f8ad5ea28cf1d67dbf8bd09fb16ea12e41  src/p12_bank_liquidity/candidate_a/timestamp_adapter.py

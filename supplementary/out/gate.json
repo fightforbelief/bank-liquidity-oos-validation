@@ -1,24 +1,24 @@
 {
   "primary": {
     "HistoricAverage": {
-      "estimate": -0.004283616827738098,
+      "estimate": -0.0042836168277380965,
       "lower": -0.008591823072073467,
-      "upper": -0.0006109514586281041,
-      "estimate_repr": "-0.004283616827738098",
+      "upper": -0.000610951458628103,
+      "estimate_repr": "-0.0042836168277380965",
       "lower_repr": "-0.008591823072073467",
-      "upper_repr": "-0.0006109514586281041",
+      "upper_repr": "-0.000610951458628103",
       "expected_estimate_repr": "-0.0042836168277380965",
       "expected_lower_repr": "-0.008591823072073467",
       "expected_upper_repr": "-0.000610951458628103",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "Naive": {
-      "estimate": -0.010815696110028987,
+      "estimate": -0.010815696110028986,
       "lower": -0.015259849607384432,
       "upper": -0.006857415193080016,
-      "estimate_repr": "-0.010815696110028987",
+      "estimate_repr": "-0.010815696110028986",
       "lower_repr": "-0.015259849607384432",
       "upper_repr": "-0.006857415193080016",
       "expected_estimate_repr": "-0.010815696110028986",
@@ -26,99 +26,99 @@
       "expected_upper_repr": "-0.006857415193080016",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "SeasonalNaive": {
       "estimate": -0.003606282624498774,
       "lower": -0.00774629104284172,
-      "upper": -0.00026764583688035294,
+      "upper": -0.0002676458368803533,
       "estimate_repr": "-0.003606282624498774",
       "lower_repr": "-0.00774629104284172",
-      "upper_repr": "-0.00026764583688035294",
+      "upper_repr": "-0.0002676458368803533",
       "expected_estimate_repr": "-0.003606282624498774",
       "expected_lower_repr": "-0.00774629104284172",
       "expected_upper_repr": "-0.0002676458368803533",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "AutoARIMA": {
       "estimate": -0.010605197991587254,
       "lower": -0.014542165346988973,
-      "upper": -0.006979203762667185,
+      "upper": -0.006979203762667186,
       "estimate_repr": "-0.010605197991587254",
       "lower_repr": "-0.014542165346988973",
-      "upper_repr": "-0.006979203762667185",
+      "upper_repr": "-0.006979203762667186",
       "expected_estimate_repr": "-0.010605197991587254",
       "expected_lower_repr": "-0.014542165346988973",
       "expected_upper_repr": "-0.006979203762667186",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "SimpleExponentialSmoothing": {
       "estimate": -0.006683875293450963,
-      "lower": -0.011230451149514733,
-      "upper": -0.003131373227894662,
+      "lower": -0.011230451149514731,
+      "upper": -0.0031313732278946617,
       "estimate_repr": "-0.006683875293450963",
-      "lower_repr": "-0.011230451149514733",
-      "upper_repr": "-0.003131373227894662",
+      "lower_repr": "-0.011230451149514731",
+      "upper_repr": "-0.0031313732278946617",
       "expected_estimate_repr": "-0.006683875293450963",
       "expected_lower_repr": "-0.011230451149514731",
       "expected_upper_repr": "-0.0031313732278946617",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "AutoTheta": {
       "estimate": -0.011553343325476726,
-      "lower": -0.015839678595276147,
-      "upper": -0.007630739438669055,
+      "lower": -0.015839678595276144,
+      "upper": -0.0076307394386690534,
       "estimate_repr": "-0.011553343325476726",
-      "lower_repr": "-0.015839678595276147",
-      "upper_repr": "-0.007630739438669055",
+      "lower_repr": "-0.015839678595276144",
+      "upper_repr": "-0.0076307394386690534",
       "expected_estimate_repr": "-0.011553343325476726",
       "expected_lower_repr": "-0.015839678595276144",
       "expected_upper_repr": "-0.0076307394386690534",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     }
   },
   "secondary": {
     "HistoricAverage": {
       "estimate": -0.005146063610992731,
       "lower": -0.009309246208334955,
-      "upper": -0.001854565732614158,
+      "upper": -0.0018545657326141576,
       "estimate_repr": "-0.005146063610992731",
       "lower_repr": "-0.009309246208334955",
-      "upper_repr": "-0.001854565732614158",
+      "upper_repr": "-0.0018545657326141576",
       "expected_estimate_repr": "-0.005146063610992731",
       "expected_lower_repr": "-0.009309246208334955",
       "expected_upper_repr": "-0.0018545657326141576",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "Naive": {
       "estimate": -0.0030933316554803522,
-      "lower": -0.005993370429479464,
-      "upper": -0.000970532083135954,
+      "lower": -0.005993370429479462,
+      "upper": -0.0009705320831359538,
       "estimate_repr": "-0.0030933316554803522",
-      "lower_repr": "-0.005993370429479464",
-      "upper_repr": "-0.000970532083135954",
+      "lower_repr": "-0.005993370429479462",
+      "upper_repr": "-0.0009705320831359538",
       "expected_estimate_repr": "-0.0030933316554803522",
       "expected_lower_repr": "-0.005993370429479462",
       "expected_upper_repr": "-0.0009705320831359538",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "SeasonalNaive": {
-      "estimate": -0.004292877329541735,
+      "estimate": -0.004292877329541734,
       "lower": -0.008381815923470195,
       "upper": -0.0011985408033110146,
-      "estimate_repr": "-0.004292877329541735",
+      "estimate_repr": "-0.004292877329541734",
       "lower_repr": "-0.008381815923470195",
       "upper_repr": "-0.0011985408033110146",
       "expected_estimate_repr": "-0.004292877329541734",
@@ -126,35 +126,35 @@
       "expected_upper_repr": "-0.0011985408033110146",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "AutoARIMA": {
-      "estimate": -0.0027435544033859714,
-      "lower": -0.005794732292470179,
+      "estimate": -0.0027435544033859705,
+      "lower": -0.0057947322924701795,
       "upper": -0.0002886055457325237,
-      "estimate_repr": "-0.0027435544033859714",
-      "lower_repr": "-0.005794732292470179",
+      "estimate_repr": "-0.0027435544033859705",
+      "lower_repr": "-0.0057947322924701795",
       "upper_repr": "-0.0002886055457325237",
       "expected_estimate_repr": "-0.0027435544033859705",
       "expected_lower_repr": "-0.0057947322924701795",
       "expected_upper_repr": "-0.0002886055457325237",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "SimpleExponentialSmoothing": {
-      "estimate": -0.0068507957197966665,
+      "estimate": -0.006850795719796667,
       "lower": -0.010837846649293232,
-      "upper": -0.0036323368098023084,
-      "estimate_repr": "-0.0068507957197966665",
+      "upper": -0.003632336809802309,
+      "estimate_repr": "-0.006850795719796667",
       "lower_repr": "-0.010837846649293232",
-      "upper_repr": "-0.0036323368098023084",
+      "upper_repr": "-0.003632336809802309",
       "expected_estimate_repr": "-0.006850795719796667",
       "expected_lower_repr": "-0.010837846649293232",
       "expected_upper_repr": "-0.003632336809802309",
       "n_valid": 2000,
       "n_failed": 0,
-      "match": false
+      "match": true
     },
     "AutoTheta": {
       "estimate": -0.004192768516977067,
@@ -172,51 +172,14 @@
     }
   },
   "draw": "numpy.Generator.choice(n, size=n, replace=True)",
-  "exact_match": false,
-  "stage19_point_diagnostic": {
-    "HistoricAverage": {
-      "primary_repr": "-0.0042836168277380965",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.005146063610992731",
-      "secondary_matches_recorded": true
-    },
-    "Naive": {
-      "primary_repr": "-0.010815696110028986",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.0030933316554803522",
-      "secondary_matches_recorded": true
-    },
-    "SeasonalNaive": {
-      "primary_repr": "-0.003606282624498774",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.004292877329541734",
-      "secondary_matches_recorded": true
-    },
-    "AutoARIMA": {
-      "primary_repr": "-0.010605197991587254",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.0027435544033859705",
-      "secondary_matches_recorded": true
-    },
-    "SimpleExponentialSmoothing": {
-      "primary_repr": "-0.006683875293450963",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.006850795719796667",
-      "secondary_matches_recorded": true
-    },
-    "AutoTheta": {
-      "primary_repr": "-0.011553343325476726",
-      "primary_matches_recorded": true,
-      "secondary_repr": "-0.004192768516977067",
-      "secondary_matches_recorded": true
-    }
-  },
+  "gate_code_path": "p12_bank_liquidity.candidate_a.stage18_inference.cluster_bootstrap on frozen aggregate_paired_mase entity deltas",
+  "exact_match": true,
   "environment": {
     "python": "3.12.10",
     "numpy": "2.0.2",
     "pandas": "2.2.3",
     "scipy": "1.18.1",
-    "git_commit": "acaa16575adcfd98d9582f04dd46fa66c0370fd3",
+    "git_commit": "47595a9b2e8e1d9997cbe974436857dc8ef0d1fa",
     "draw": "numpy.Generator.choice(n, size=n, replace=True)",
     "primary_seed": 20261027,
     "posthoc_seed": 20261106,

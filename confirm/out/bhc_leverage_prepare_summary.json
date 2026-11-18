@@ -1,0 +1,88 @@
+{
+  "label": "CONFIRMATORY_QE_REPLICATION_RUN",
+  "target": "bhc_leverage",
+  "arm_a": {
+    "grid_rows": 839775,
+    "grid_entities": 13761,
+    "observed_exact_date_rows": 666104,
+    "synthetic_or_unmatched_grid_rows": 173671,
+    "source_rows_absent_from_grid": 165754,
+    "finite_value_on_non_source_date": 0,
+    "first_failure": {
+      "total": 4128,
+      "test": 2393,
+      "train": 539,
+      "pass": 6653,
+      "gap": 48
+    },
+    "entities_after_quality_filter": 6653,
+    "entities_removed_by_post_imputation_validation": 0,
+    "entities_after_imputation": 6653,
+    "classical_filter": {
+      "pass": 6653
+    },
+    "final_eligible_entities": 6653,
+    "final_rows": 534275,
+    "observed_finite_rows_in_final_frame": 498231,
+    "synthetic_rows_in_final_frame": 36044,
+    "panel_min_length": 27,
+    "panel_n_windows": 6,
+    "target_rows_in_window": 39918,
+    "valid_observed_targets_in_window": 31364,
+    "entities_with_a_valid_target": 6653,
+    "entities_with_no_valid_evaluation_origin": 0,
+    "target_month_day_counts": {
+      "12-30": 921,
+      "06-30": 9602,
+      "12-31": 9436,
+      "03-30": 1342,
+      "03-31": 9374,
+      "09-30": 9243
+    }
+  },
+  "arm_b": {
+    "grid_rows": 839775,
+    "grid_entities": 13761,
+    "observed_exact_date_rows": 831858,
+    "synthetic_or_unmatched_grid_rows": 7917,
+    "source_rows_absent_from_grid": 0,
+    "finite_value_on_non_source_date": 0,
+    "first_failure": {
+      "gap": 12,
+      "train": 12,
+      "total": 4128,
+      "pass": 9609
+    },
+    "entities_after_quality_filter": 9609,
+    "entities_removed_by_post_imputation_validation": 0,
+    "entities_after_imputation": 9609,
+    "classical_filter": {
+      "pass": 9609
+    },
+    "final_eligible_entities": 9609,
+    "final_rows": 779156,
+    "observed_finite_rows_in_final_frame": 772857,
+    "synthetic_rows_in_final_frame": 6299,
+    "panel_min_length": 27,
+    "panel_n_windows": 6,
+    "target_rows_in_window": 57654,
+    "valid_observed_targets_in_window": 47959,
+    "entities_with_a_valid_target": 9609,
+    "entities_with_no_valid_evaluation_origin": 0,
+    "target_month_day_counts": {
+      "03-31": 15861,
+      "06-30": 12794,
+      "09-30": 12966,
+      "12-31": 16033
+    }
+  },
+  "counts": {
+    "arm_a_eligible_rows": 31364,
+    "arm_b_eligible_rows": 47959,
+    "primary_common_keys": 31364,
+    "arm_a_only_keys": 0,
+    "arm_b_only_keys": 16595,
+    "different_origin_keys": 1341
+  },
+  "seconds": 66.6
+}

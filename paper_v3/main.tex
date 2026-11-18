@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+\makeatletter
+\newcommand{\setval}[2]{\expandafter\def\csname p12@#1\endcsname{#2}}
+\newcommand{\val}[1]{\ifcsname p12@#1\endcsname\csname p12@#1\endcsname\else\textcolor{red}{\textbf{[\detokenize{#1}]}}\fi}
+\makeatother
+\IfFileExists{generated/values.tex}{\input{generated/values.tex}}{}
+\IfFileExists{generated/confirm_values.tex}{\input{generated/confirm_values.tex}}{}
+\newcommand{\fittable}[1]{\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}}
+\newcommand{\gentable}[1]{\IfFileExists{generated/#1.tex}{{\small\setlength{\tabcolsep}{4pt}\input{generated/#1.tex}}}{\begin{center}\fbox{\textcolor{red}{\textbf{[table \detokenize{#1} not generated]}}}\end{center}}}
+
+\title{Who Gets Benchmarked? A Quarterly Date Grid\\ That Silently Drops One in Three Entrants}
+\author{Hanqing Yang\thanks{Contact: \texttt{hanqing.yang189@gmail.com}. Code, protocols, and logs: \url{https://github.com/fightforbelief/bank-liquidity-oos-validation}.}}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Forecasting benchmarks rank methods on a panel of series, but the panel itself is an output of preprocessing. We study one rarely examined step, the date grid onto which quarterly filings are placed, in a recent open benchmark for financial forecasting. Its quarterly grid is a three-month step from each series' first date. From a 30~June or 30~September start the step lands on 30~December and 30~March, where year-end and first-quarter filings fail to join. For U.S.\ bank cash liquidity this barely affects the banks that remain: on common targets, six baseline models' errors move by 0.2--1.3\% of their level and rankings are unchanged. Its effect is on who remains. The quality screen removes 2,190 banks, all of which began filing in a second or third quarter: one in three banks that entered after 1976. The benchmark's reported panel of 17,383 banks is exactly the panel this grid produces; a calendar grid retains 19,567. The removed group matters for model comparison. Among entrants a random walk beats AutoTheta and AutoARIMA, whereas among banks present since 1976 the order reverses, a difference not explained by history length, period, persistence, or bank age. In a pre-registered replication on the benchmark's three other quarterly datasets, the grid again removed 34--36\% of entrants in every dataset, and the predicted entrant--incumbent difference held in two of three, though as a difference in degree rather than a reversal. Benchmark conclusions are averages over a composition that preprocessing sets silently; we propose simple diagnostics that expose it.
+\end{abstract}
+
+\noindent\textbf{Keywords:} forecast evaluation; benchmark construction; sample selection; MASE; bank Call Reports; pre-registration.
+
+% ===========================================================================
+\section{Introduction}
+% ===========================================================================
+A benchmark result such as ``classical models remain competitive on bank indicators'' is a statement about an average over a panel. Which series are in that panel is decided by preprocessing: how dates are placed on a grid, how gaps are filled, and which series pass a quality screen. These steps are usually described in a sentence and checked, if at all, for their effect on accuracy. Their effect on composition, and through composition on the conclusions, is rarely measured.
+
+We examine this in the open financial forecasting benchmark of Bejarano et al.~\cite{bejarano2026} (FTSFR), for its four quarterly datasets built from U.S.\ bank Call Reports. The inspected code maps the quarterly frequency to a three-month step generated from each series' own first date. Calendar arithmetic makes that grid depend on the first date. A bank that began filing on 31~March or 31~December is placed on calendar quarter-ends. A bank that began on 30~June or 30~September is placed on a grid that steps to 30~December and 30~March, where its year-end and first-quarter filings, dated the 31st, fail to join. Nothing in the configuration, which says ``quarterly,'' reveals this.
+
+We compare this grid (Arm~A) with a strict calendar quarter-end grid (Arm~B), holding the target, quality screen, six baseline models, horizon, and metric fixed. Our findings are:
+\begin{enumerate}
+  \item \textbf{For banks, the grid barely changes the forecasts it keeps.} On the 85,205 targets present on both grids, a pre-specified paired comparison finds lower MASE on Arm~B for all six models, but the differences are 0.2--1.3\% of the MASE level, are exactly zero for the 95\% of banks whose two grids coincide, and leave every per-bank and aggregate model ranking essentially unchanged (Section~\ref{sec:kept}).
+  \item \textbf{The grid changes who is evaluated.} The screen removes 2,190 banks under Arm~A, all with a second- or third-quarter first filing, mostly because the drifted grid's last stamp has no filing. These are 35\% of all banks that entered after 1976. The benchmark's published panel of 17,383 banks is exactly the Arm~A panel (Section~\ref{sec:selection}).
+  \item \textbf{The removed population ranks the models differently.} Entering banks and long-standing banks rank the models in opposite orders, a reversal not explained by training length, period, persistence, or age, and concentrated after abrupt level shifts. Because the grid under-represents entrants, the pooled ranking leans toward the incumbent ranking, although in this series the pooled order changes only within sampling error (Section~\ref{sec:composition}).
+  \item \textbf{The selection replicates exactly; the ranking difference replicates in direction.} Under a protocol frozen before the benchmark's three other quarterly datasets were processed, all lost targets again belong to day-30 starters and 34--36\% of entrants are lost in every dataset. The predicted entrant--incumbent difference holds in two of three datasets, without a full reversal of order (Section~\ref{sec:confirm}).
+\end{enumerate}
+The first finding alone would make the grid a minor implementation detail. Together with the others, it illustrates a general point: a preprocessing error can be harmless for accuracy and still consequential for conclusions, because it reweights the population over which accuracy is averaged.
+
+\paragraph{Related work.} Benchmarks and competitions such as M4~\cite{makridakis2020} and the Monash archive~\cite{godahewa2021} made forecasting methods comparable by fixing data, horizons, and metrics. Reviews of evaluation practice emphasise leakage, scaling, and undocumented preprocessing~\cite{tashman2000,hewamalage2023}, and recent work shows that preprocessing choices can confound model comparisons~\cite{preproc2026,moretti2026}. That literature studies how preprocessing changes the inputs and errors of series that are evaluated. We study how it changes \emph{which} series are evaluated, which connects benchmark construction to the older econometric problem of non-random sample selection~\cite{heckman1979}. In banking data, entry, charter changes, and mergers are known to produce series whose behaviour differs from that of long-lived institutions~\cite{deyoung1999}; we find that this heterogeneity is large enough to reverse model rankings. Seasonal MASE~\cite{hyndman2006} is our metric, and inference resamples banks~\cite{davison1997,field2007,cameron2008}.
+
+% ===========================================================================
+\section{Data, benchmark, and the two grids}\label{sec:data}
+% ===========================================================================
+\paragraph{Data.} The Call Report file distributed with Drechsler et al.~\cite{drechsler2017} covers U.S.\ commercial banks quarterly from 31~March 1976 to 31~March 2020; every stored date is a calendar quarter-end. The benchmark constructs bank cash liquidity, cash over assets by \texttt{rssdid}, from it, along with bank leverage and the two corresponding bank-holding-company (BHC) aggregates by \texttt{bhcid}. We follow its constructor exactly (Appendix~\ref{app:construct}). After construction, Bank Cash Liquidity has 23,862 banks, the count the benchmark reports.
+
+\paragraph{The benchmark grid (Arm A).} For quarterly data the inspected code (\texttt{jmbejara/ftsfr} at commit \texttt{e740156}) calls \texttt{fill\_gaps} with a \texttt{3mo} step and per-series start and end. Each stamp is the series' first date plus a multiple of three months, with the day clamped to the month's length. In the saved grids this produces off-quarter-end stamps only for series whose first date is 30~June or 30~September: from 30~June the step gives 30~September, 30~December, 30~March, 30~June. From 31~March or 31~December every stamp is a quarter-end. On a drifted grid, two of every four filings fail to join and are treated as missing. Monthly data in the same benchmark are routed to a separate month-end routine; quarterly data are not.
+
+\paragraph{The calendar grid (Arm B).} Each series is placed on 31~March, 30~June, 30~September, and 31~December between its first and last filing, so every filing joins.
+
+\paragraph{Common protocol.} Both arms apply the benchmark's quality screen for quarterly data: at least 27 grid positions, at least 18 finite training values, training standard deviation at least 0.01, at most 60\% missing training positions, and a finite final (test) value. Training gaps are forward-filled; targets are never imputed. Six StatsForecast baselines~\cite{statsforecast} (HistoricAverage, Naive, SeasonalNaive, AutoARIMA, SES with $\alpha=0.1$, AutoTheta; season length 4) produce one-step forecasts at each series' last six grid positions, scored by seasonal MASE on each forecast's own training history.
+
+\paragraph{Study design.} The paired comparison of Section~\ref{sec:kept} was pre-specified before full-sample forecasts were run. Sections~\ref{sec:selection}--\ref{sec:composition} are exploratory analyses of Bank Cash Liquidity, the discovery dataset. Their main hypotheses were then frozen in a protocol, by SHA-256 hash, before the other three quarterly datasets were gridded, screened, or forecast (Section~\ref{sec:confirm}). No model was refitted for any exploratory analysis.
+
+% ===========================================================================
+\section{What the grid does to the banks it keeps}\label{sec:kept}
+% ===========================================================================
+On Bank Cash Liquidity the two arms share 85,205 entity--target keys from 17,377 banks. For each model, the pre-specified estimand is the unweighted mean over banks of the within-bank difference in mean MASE, Arm~B minus Arm~A, with a 2,000-replicate entity-cluster bootstrap. All six estimates are negative, from $-0.0036$ (SeasonalNaive) to $-0.0116$ (AutoTheta), and all six 95\% intervals lie below zero (Table~\ref{tab:kept}). The pre-specified result is therefore that the calendar grid is associated with lower MASE.
+
+The exploratory analyses put this in proportion. The estimates are \val{abs-relchange-range} of the Arm~A MASE level. The bank-level difference is exactly zero for 95.2--95.3\% of banks, because for a bank whose Arm~A grid does not drift the two arms are the same grid and every model produces the same forecast. All non-zero differences come from the 829 retained banks with a drifted grid. For the three models that weight recent data most (Naive, AutoARIMA, AutoTheta), about three quarters of each estimate is a change in forecast error rather than in the MASE denominator, and 80--85\% of it comes from 1,190 keys whose Arm~A forecast origin is a generated 30~March stamp, typically two quarters after the last real filing. Per-bank model rankings agree across grids (mean Kendall $\tau_b=0.98$; identical full ranking for 95.6\% of banks), and the aggregate order is identical. Appendix~\ref{app:kept} gives the decomposition and distribution tables.
+
+\begin{table}[t]
+\centering\small
+\caption{Pre-specified paired estimates on the common keys of Bank Cash Liquidity (Arm~B $-$ Arm~A, entity-level mean seasonal MASE; 95\% entity-cluster bootstrap intervals), and the estimate relative to the Arm~A level.}\label{tab:kept}
+\begin{tabular}{lrrrr}
+\toprule
+Model & Estimate & 95\% interval & Arm~A level & Relative (\%) \\
+\midrule
+HistoricAverage & $-0.0043$ & $[-0.0086,\ -0.0006]$ & 1.891 & $-0.2$ \\
+Naive & $-0.0108$ & $[-0.0153,\ -0.0069]$ & 0.885 & $-1.2$ \\
+SeasonalNaive & $-0.0036$ & $[-0.0077,\ -0.0003]$ & 1.174 & $-0.3$ \\
+AutoARIMA & $-0.0106$ & $[-0.0145,\ -0.0070]$ & 0.883 & $-1.2$ \\
+SES ($\alpha=0.1$) & $-0.0067$ & $[-0.0112,\ -0.0031]$ & 1.153 & $-0.6$ \\
+AutoTheta & $-0.0116$ & $[-0.0158,\ -0.0076]$ & 0.865 & $-1.3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Judged by its effect on accuracy, then, the grid is a minor implementation detail. The rest of the paper explains why that judgement is incomplete.
+
+% ===========================================================================
+\section{Who the grid removes}\label{sec:selection}
+% ===========================================================================
+The two arms do not evaluate the same banks. Of 23,862 constructed banks, the quality screen retains 17,383 under Arm~A and 19,567 under Arm~B. The Arm~A count is the retained-bank count the benchmark reports for this series~\cite{bejarano2026}, which indicates that the published panel was built on the drifting grid. Table~\ref{tab:screen} compares first-failure reasons. The decisive difference is the test-value rule: 1,648 banks fail it under Arm~A and none under Arm~B, because a drifted grid that ends on 30~December or 30~March has no filing at its final stamp. Fewer finite training values (531 against 39) and larger gap ratios (101 against 18) account for most of the rest.
+
+\begin{table}[t]
+\centering\small
+\caption{Bank Cash Liquidity: first failing criterion of the quality screen, by arm (23,862 constructed banks).}\label{tab:screen}
+\begin{tabular}{lrr}
+\toprule
+First failing criterion & Arm~A (\texttt{3mo}) & Arm~B (quarter-end) \\
+\midrule
+Fewer than 27 grid positions & 3,819 & 3,819 \\
+Fewer than 18 finite training values & 531 & 39 \\
+Training standard deviation below 0.01 & 380 & 419 \\
+Training gap ratio above 0.6 & 101 & 18 \\
+Final (test) value missing & 1,648 & 0 \\
+\midrule
+Retained & 17,383 & 19,567 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 2,190 banks that Arm~B retains and Arm~A does not all have a first filing dated 30~June (1,272) or 30~September (918). Of the 3,019 retained-on-B banks whose first filing falls on one of these dates, 72.5\% are removed; the remaining 829 survive with a drifted grid. All 12,594 targets that exist only on Arm~B belong to banks with a 30~June or 30~September first filing: 10,937 to removed banks and 1,657 to drifted stamps of retained banks.
+
+A first filing in a second or third quarter is a property of banks that entered the panel after it began. Every removed bank is such an entrant, whereas 81\% of unaffected banks have filed since 31~March 1976. Arm~A removes 35.3\% of all entrants, and the entrant share of the evaluated panel falls from 31.6\% to 23.1\%. Removed entrants are similar to retained entrants: their median first-filing year is 1987 against 1985 for drifted retained entrants, their series are of similar length, and, as the next section shows, they rank the models in the same way. Within entrants, the grid selects on the calendar quarter of entry, which is close to arbitrary. Across the whole panel, it selects against entrants.
+
+% ===========================================================================
+\section{Composition and model rankings}\label{sec:composition}
+% ===========================================================================
+\paragraph{Entrants and incumbents rank the models differently.} Using Arm~B forecasts, which exist for all 19,567 banks, Table~\ref{tab:groups} reports mean entity-level MASE by group. Among the 13,376 banks present since 1976 (incumbents), AutoTheta is best, then AutoARIMA, then Naive; Naive is worse than AutoTheta by 0.035 MASE (95\% interval $[0.030,\ 0.041]$). Among entrants the order reverses: Naive is best and AutoTheta second, with Naive better than AutoTheta by 0.027--0.028 and better than AutoARIMA by 0.053--0.058 in the two entrant groups. Entrants removed by Arm~A and entrants retained by it show the same reversal with nearly identical magnitudes. The contrast in (Naive $-$ AutoTheta) between entrants and incumbents is \val{disc-h3-contrast}.
+
+\begin{table}[t]
+\centering\small
+\caption{Bank Cash Liquidity, Arm~B forecasts: mean entity-level MASE by group, and Naive minus the two strongest models (95\% entity-cluster intervals).}\label{tab:groups}
+\fittable{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Group & Banks & Naive & AutoARIMA & AutoTheta & Naive $-$ AutoTheta & Naive $-$ AutoARIMA \\
+\midrule
+Incumbents (since 1976) & 13,376 & 0.870 & 0.849 & 0.834 & $+0.035$ $[+0.030,\ +0.041]$ & $+0.021$ $[+0.015,\ +0.027]$ \\
+Entrants retained by Arm~A & 4,001 & 0.884 & 0.942 & 0.910 & $-0.027$ $[-0.039,\ -0.015]$ & $-0.058$ $[-0.076,\ -0.042]$ \\
+Entrants removed by Arm~A & 2,190 & 0.875 & 0.928 & 0.903 & $-0.028$ $[-0.041,\ -0.015]$ & $-0.053$ $[-0.069,\ -0.037]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\paragraph{It is not explained by short histories.} Entrants have shorter series (median 60 observed quarters for removed entrants against 84 for unaffected banks), and complex models are known to need longer histories. Within every bin of training length, from 18--30 to over 80 finite values, entrants favour Naive over AutoTheta and incumbents favour AutoTheta, each significantly in four of five bins. Restricting to targets from 2000 to 2020 gives the same reversal (entrants $-0.037$ $[-0.049,\ -0.024]$, incumbents $+0.027$ $[+0.018,\ +0.036]$), so calendar period does not explain it either.
+
+\paragraph{It is not persistence or a life-cycle stage.} The AR(1) persistence of the recent training window is similar in the two groups (median 0.49 against 0.44). Within four of the five persistence quintiles the reversal remains; in the most persistent quintile both groups are close to zero, consistent with a random walk and its smoothed versions forecasting almost identically there. Among entrants, the advantage of Naive does not shrink with age: it is $-0.015$ (interval including zero) at 0--7 years since entry and $-0.037$ $[-0.061,\ -0.014]$ after 20 years. The difference behaves like a cohort trait rather than a stage that young banks pass through.
+
+\paragraph{It is concentrated after level shifts.} We flag a key when its last eight training quarters contain a quarter-on-quarter change larger than five times the median absolute change of the preceding window. Such shifts are more common for entrants (22.9\% of keys against 18.3\%). After a shift, entrants favour Naive strongly ($-0.082$ $[-0.120,\ -0.040]$), as a model that re-anchors at the last value should. Without a recent shift, entrants show no preference ($-0.005$ $[-0.013,\ 0.003]$), while incumbents still favour AutoTheta ($+0.046$ $[0.040,\ 0.051]$). Abrupt balance-sheet changes, which in the Call Report data accompany new charters, reorganisations, and acquisitions, account for much of the entrant pattern; the stability of long-lived banks accounts for AutoTheta's advantage. This is a description of where the reversal lives, not a causal decomposition.
+
+\paragraph{Consequence for the benchmark.} Because Arm~A under-represents entrants, its full-panel ranking leans toward the incumbent ranking. On Arm~A the aggregate order is AutoTheta, AutoARIMA, Naive; on Arm~B it is AutoTheta, Naive, AutoARIMA. The swap of second and third places is within sampling error on both arms (Naive $-$ AutoARIMA: $+0.002$ $[-0.004,\ 0.008]$ on Arm~A, $-0.004$ $[-0.009,\ 0.002]$ on Arm~B), and AutoTheta is first in every bootstrap replicate on both. The headline, ``AutoTheta best among these baselines,'' therefore survives the grid, but it is a statement about a panel that is three-quarters incumbents. For the third of banks that entered after 1976, the conclusion about AutoTheta and Naive is the opposite.
+
+% ===========================================================================
+\section{Pre-registered replication on three other datasets}\label{sec:confirm}
+% ===========================================================================
+The benchmark's other quarterly datasets, Bank Leverage, BHC Leverage, and BHC Cash Liquidity, use the same grid code. Before any of them was gridded, screened, or forecast, we froze a protocol (SHA-256 recorded with the code) stating three hypotheses for each dataset and their decision rules. H1: every Arm~B-only target belongs to an entity with a 30~June or 30~September first filing. H2: the entrant share is lower on Arm~A than on Arm~B. H3 (primary): on Arm~B, the entrant-minus-incumbent contrast in (Naive $-$ AutoTheta) has a 95\% upper limit below zero. H3 was to be called confirmed overall if it held in at least two of the three datasets. Everything else, including the models, thresholds, covariate definitions, and seed, was fixed. Bank Cash Liquidity is reported for comparison but is not evidence for the replication.
+
+Table~\ref{tab:confirm-cov} reports the coverage results and Table~\ref{tab:confirm} the ranking contrast. H1 held in \val{confirm-h1} datasets, H2 in \val{confirm-h2}, and H3 in \val{confirm-h3}; by the pre-specified rule, the predicted entrant--incumbent difference is \val{confirm-overall}.
+
+\begin{table}[t]
+\centering
+\caption{Coverage and composition by dataset. Day-30 first: share of Arm~B-only targets whose entity's first filing is 30~June or 30~September (H1). Entrants lost: share of entrants retained by either arm that Arm~A does not retain. Last column: range across models of the paired estimate's magnitude relative to the Arm~A MASE level. $^{\dagger}$Discovery dataset.}\label{tab:confirm-cov}
+\gentable{tab_confirm_coverage}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Ranking heterogeneity by dataset (Arm~B forecasts; entity-level means; 95\% intervals from 2,000 entity resamples within group). H3 is confirmed when the upper limit of the contrast versus AutoTheta is below zero. $^{\dagger}$Discovery dataset, not part of the confirmatory test.}\label{tab:confirm}
+\gentable{tab_confirm}
+\end{table}
+
+\begin{sloppypar}\val{confirm-text}\end{sloppypar}
+
+Three features of these results matter for interpretation. First, the selection mechanism replicates without exception and with nearly constant strength: in every dataset all Arm~B-only targets belong to entities with a 30~June or 30~September first filing, and Arm~A loses 34--36\% of entering entities. For holding companies, which are mostly entrants, the loss is a third of the panel. Second, H3 tests a difference, not a reversal. In Bank Leverage both groups favour Naive, entrants by more; in BHC Cash Liquidity both favour AutoTheta, entrants by less. Only in Bank Cash Liquidity do entrants and incumbents pick different winners. The replicated finding is therefore that entering entities are systematically more favourable to the random walk relative to AutoTheta, by an amount that varies by target and is largest for cash liquidity at both levels of aggregation. Third, BHC Leverage does not show it, and its point estimate has the opposite sign. Composition matters for the conclusions of a benchmark to the extent that subpopulations differ, and how much they differ depends on the target.
+
+Finally, the accuracy effect on kept entities, small for banks (at most 1.9\% of the MASE level), is larger for holding companies, up to 8.2\% for BHC Leverage (Table~\ref{tab:confirm-cov}). The statement that the grid is nearly harmless for the forecasts it keeps is specific to bank-level series.
+
+% ===========================================================================
+\section{Discussion}
+% ===========================================================================
+\paragraph{Harmless for accuracy, consequential for conclusions.} The usual check for a preprocessing step is whether it changes the errors of the series being scored. By that check the \texttt{3mo} grid is nearly harmless here. Its real effect is on which banks are scored, and the banks it removes are a group for which the benchmark's conclusion about these models is reversed. A benchmark can be internally consistent, reproducible, and accurate on its own panel, and still answer a question about a different population from the one it names.
+
+\paragraph{Why this generalises.} The mechanism needs three ingredients that are common in benchmark pipelines: a grid generated relative to each series' own start, calendar arithmetic that is not invariant to the start date, and a quality screen that removes series with too many missing grid positions. Any panel in which entities enter at different times, such as firms, funds, bonds, or banks, then has its composition determined by when each entity entered. Entry timing is rarely irrelevant: in our data it separates two populations whose model rankings differ.
+
+\paragraph{Recommendations.} We suggest four inexpensive checks for benchmarks of panel data. (i) Report the share of stored observations that join the grid, overall and by entity start date; on a correct grid it is 100\%. (ii) Report the screen's removals by criterion, and compare them across an alternative grid. (iii) Report retained-entity composition on observable characteristics such as entry date and history length. (iv) Report model rankings within the largest subpopulations, not only the pooled ranking.
+
+% ===========================================================================
+\section{Limitations}
+% ===========================================================================
+\begin{enumerate}
+  \item The entrant--incumbent reversal is a descriptive association. We do not identify why entrants' series favour a random walk beyond showing where the difference is concentrated. Entrants are defined by first filing in this file, which mixes de novo banks with charters created by reorganisation.
+  \item The analyses in Sections~\ref{sec:selection}--\ref{sec:composition} were specified after earlier results were seen and are exploratory. Only the hypotheses in Section~\ref{sec:confirm} were tested under a frozen protocol, and only the paired estimate in Section~\ref{sec:kept} was pre-specified before full-sample forecasts.
+  \item We evaluate six classical baselines, not the benchmark's neural models, and we do not re-estimate its published tables. Whether neural models show the same heterogeneity is open.
+  \item Forecasts are retrospective one-step forecasts on the final stored file, not real-time forecasts on data vintages.
+  \item ``Implementation-faithful'' refers to the inspected code path. We show that it reproduces the published retained-bank count, but we did not establish which build produced the published tables.
+\end{enumerate}
+
+% ===========================================================================
+\section{Reproducibility and data}
+% ===========================================================================
+The pre-specified protocol, the post-hoc protocol, the confirmatory protocol with its hash, all analysis code, and all deviation logs are retained in the public project repository given on the title page. The Call Report file was obtained from the NYU Call Report data page, which permits non-commercial use; no bank identifiers are reported. Environment: Python 3.12, NumPy 2.0.2, polars 1.31.0, utilsforecast 0.2.16, StatsForecast 2.1.1.
+
+\appendix
+\section{Constructors}\label{app:construct}
+Following \texttt{create\_ftsfr\_datasets.py}: Bank Cash Liquidity is cash/assets by \texttt{rssdid}, keeping rows with assets above $10^{-10}$ and non-negative cash and removing constant series. Bank Leverage is assets/equity by \texttt{rssdid}, keeping rows with equity above $10^{-10}$ and positive assets. The BHC series sum assets, equity, and cash by \texttt{bhcid} and date, drop \texttt{bhcid} 0, and apply the same ratio rules; BHC Cash Liquidity also removes constant series. Values are cast to 32-bit floats as in the forecast loader, and non-finite values are dropped.
+
+\section{Additional results for the kept banks}\label{app:kept}
+\begin{table}[h]
+\centering
+\caption{Exact split of the paired estimate into an error term and a scale term, and the unscaled change in absolute error.}
+\gentable{tab_decomp}
+\end{table}
+\begin{table}[h]
+\centering
+\caption{Sign of the entity-level differences $\delta_i$, and robust location estimates.}
+\gentable{tab_dist}
+\end{table}
+\begin{table}[h]
+\centering
+\caption{Contribution of the 1,190 different-origin keys.}
+\gentable{tab_origin}
+\end{table}
+
+\begin{thebibliography}{99}
+\bibitem{bejarano2026} Jeremy Bejarano, Viren Desai, Kausthub Keshava, Arsh Kumar, Zixiao Wang, Vincent Hanyang Xu, and Yangge Xu. An open benchmark for evaluating time series forecasting methods across financial markets. Working Paper 26-05, Office of Financial Research, 2026.
+\bibitem{cameron2008} A. Colin Cameron, Jonah B. Gelbach, and Douglas L. Miller. Bootstrap-based improvements for inference with clustered errors. \emph{The Review of Economics and Statistics}, 90(3):414--427, 2008.
+\bibitem{davison1997} A. C. Davison and D. V. Hinkley. \emph{Bootstrap Methods and Their Application}. Cambridge University Press, 1997.
+\bibitem{deyoung1999} Robert DeYoung. Birth, growth, and life or death of newly chartered banks. \emph{Federal Reserve Bank of Chicago Economic Perspectives}, 23(3):18--35, 1999.
+\bibitem{drechsler2017} Itamar Drechsler, Alexi Savov, and Philipp Schnabl. The deposits channel of monetary policy. \emph{The Quarterly Journal of Economics}, 132(4):1819--1876, 2017.
+\bibitem{field2007} Christopher A. Field and Alan H. Welsh. Bootstrapping clustered data. \emph{Journal of the Royal Statistical Society: Series B}, 69(3):369--390, 2007.
+\bibitem{godahewa2021} Rakshitha Godahewa, Christoph Bergmeir, Geoffrey I. Webb, Rob J. Hyndman, and Pablo Montero-Manso. Monash time series forecasting archive. In \emph{NeurIPS Datasets and Benchmarks Track}, 2021.
+\bibitem{heckman1979} James J. Heckman. Sample selection bias as a specification error. \emph{Econometrica}, 47(1):153--161, 1979.
+\bibitem{hewamalage2023} Hansika Hewamalage, Klaus Ackermann, and Christoph Bergmeir. Forecast evaluation for data scientists: common pitfalls and best practices. \emph{Data Mining and Knowledge Discovery}, 37:788--832, 2023.
+\bibitem{hyndman2006} Rob J. Hyndman and Anne B. Koehler. Another look at measures of forecast accuracy. \emph{International Journal of Forecasting}, 22(4):679--688, 2006.
+\bibitem{makridakis2020} Spyros Makridakis, Evangelos Spiliotis, and Vassilios Assimakopoulos. The M4 Competition: 100,000 time series and 61 forecasting methods. \emph{International Journal of Forecasting}, 36(1):54--74, 2020.
+\bibitem{preproc2026} Guilherme Afonso Galindo Padilha et al. Are we really benchmarking forecasting models? The impact of preprocessing on time series performance. arXiv:2610.09096, 2026.
+\bibitem{moretti2026} Valentina Moretti, Ivan Marisca, Cesare Alippi, and Andrea Cini. Position: Current benchmarking hinders real progress in deep learning for time series forecasting. In \emph{Proceedings of ICML}, 2026. arXiv:2512.22702.
+\bibitem{statsforecast} Nixtla. StatsForecast, release 2.1.1, 2026.
+\bibitem{tashman2000} Leonard J. Tashman. Out-of-sample tests of forecasting accuracy: an analysis and review. \emph{International Journal of Forecasting}, 16(4):437--450, 2000.
+\end{thebibliography}
+\end{document}

@@ -11,8 +11,13 @@ import numpy as np
 import pandas as pd
 import scipy
 
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
 import coverage
 import load
+from p12_bank_liquidity.candidate_a import stage18_inference
 import make_tex
 import p12_supplementary as S
 
@@ -115,16 +120,52 @@ def environment() -> dict:
     }
 
 
+def frozen_entity_deltas(frame: pd.DataFrame) -> np.ndarray:
+    """Entity deltas exactly as frozen `aggregate_paired_mase` builds them.
+
+    Python-float sum / len per arm inside each entity, entities in order of first
+    appearance in the saved pair file (dict insertion order in the frozen code).
+    """
+    pairs: dict[object, list[tuple[float, float]]] = {}
+    for entity, a, b in zip(frame["entity"], frame["A_mase"], frame["B_mase"]):
+        pairs.setdefault(entity, []).append((float(a), float(b)))
+    deltas = []
+    for items in pairs.values():
+        mean_a = sum(item[0] for item in items) / len(items)
+        mean_b = sum(item[1] for item in items) / len(items)
+        deltas.append(mean_b - mean_a)
+    return np.asarray(deltas, dtype=float)
+
+
+def frozen_gate_bootstrap(frame: pd.DataFrame) -> S.BootResult:
+    """Run the frozen Stage 18 bootstrap code itself, not a re-implementation."""
+    out = stage18_inference.cluster_bootstrap(frozen_entity_deltas(frame), seed=S.PRIMARY_SEED, replicates=S.N_BOOT)
+    if out["interval"] != "available":
+        raise RuntimeError(f"frozen bootstrap unavailable: {out['reason']}")
+    return S.BootResult(
+        np.array([out["estimate"]]),
+        np.array([out["low"]]),
+        np.array([out["high"]]),
+        int(out["valid"]),
+        int(out["failed"]),
+    )
+
+
 def run_gate(frame: pd.DataFrame) -> dict:
     primary = recorded(load.RUN / "primary_results.json")
     secondary = recorded(load.RUN / "secondary_results.json")
-    report: dict = {"primary": {}, "secondary": {}, "draw": environment()["draw"]}
+    report: dict = {
+        "primary": {},
+        "secondary": {},
+        "draw": environment()["draw"],
+        "gate_code_path": "p12_bank_liquidity.candidate_a.stage18_inference.cluster_bootstrap on frozen aggregate_paired_mase entity deltas",
+    }
     exact = True
     for model in S.MODELS:
         print(f"GATE {model}", flush=True)
         wide = S.pair_wide(frame, model)
-        got_primary = S.reproduce_primary(wide, seed=S.PRIMARY_SEED, draw=project_draw)
-        got_secondary = S.reproduce_primary(wide.loc[wide["same_origin"]].copy(), seed=S.PRIMARY_SEED, draw=project_draw)
+        got_primary = frozen_gate_bootstrap(wide)
+        got_secondary = frozen_gate_bootstrap(wide.loc[wide["same_origin"]].copy())
         report["primary"][model] = pack(got_primary, primary[model])
         report["secondary"][model] = pack(got_secondary, secondary[model])
         exact = exact and report["primary"][model]["match"] and report["secondary"][model]["match"]

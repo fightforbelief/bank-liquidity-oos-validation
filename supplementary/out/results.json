@@ -1,0 +1,584 @@
+{
+  "gate": {
+    "exact_match": true
+  },
+  "primary_estimate": {
+    "HistoricAverage": -0.004283616827738098,
+    "Naive": -0.010815696110028987,
+    "SeasonalNaive": -0.003606282624498774,
+    "AutoARIMA": -0.010605197991587254,
+    "SimpleExponentialSmoothing": -0.006683875293450963,
+    "AutoTheta": -0.011553343325476726
+  },
+  "levels": {
+    "HistoricAverage": {
+      "mean_entity_mase_A": 1.8913928645532536,
+      "mean_entity_mase_B": 1.8871092477255154,
+      "median_entity_mase_A": 1.4183315512478607,
+      "median_entity_mase_B": 1.4190571325911627,
+      "median_key_mase_A": 1.4100721418956617,
+      "median_key_mase_B": 1.409607779461156,
+      "rel_change": -0.002264794854637482,
+      "rel_change_lo": -0.004466668551032823,
+      "rel_change_hi": -0.00026479134986577747
+    },
+    "Naive": {
+      "mean_entity_mase_A": 0.8850632510532906,
+      "mean_entity_mase_B": 0.8742475549432617,
+      "median_entity_mase_A": 0.6540477156445139,
+      "median_entity_mase_B": 0.6495693386367656,
+      "median_key_mase_A": 0.49986633089405014,
+      "median_key_mase_B": 0.4974110304358534,
+      "rel_change": -0.01222025216520683,
+      "rel_change_lo": -0.017124980067569854,
+      "rel_change_hi": -0.007860171296349838
+    },
+    "SeasonalNaive": {
+      "mean_entity_mase_A": 1.1744103252195848,
+      "mean_entity_mase_B": 1.170804042595086,
+      "median_entity_mase_A": 0.8173349307194613,
+      "median_entity_mase_B": 0.8163183135355722,
+      "median_key_mase_A": 0.6492222637705437,
+      "median_key_mase_B": 0.649075119889504,
+      "rel_change": -0.0030707177440937503,
+      "rel_change_lo": -0.00639511282920921,
+      "rel_change_hi": -1.5349526374234024e-05
+    },
+    "AutoARIMA": {
+      "mean_entity_mase_A": 0.8828218830644025,
+      "mean_entity_mase_B": 0.8722166850728152,
+      "median_entity_mase_A": 0.6469652848244986,
+      "median_entity_mase_B": 0.6436797989816061,
+      "median_key_mase_A": 0.5119249521037527,
+      "median_key_mase_B": 0.5101738591128876,
+      "rel_change": -0.012012839956770256,
+      "rel_change_lo": -0.01645220412391757,
+      "rel_change_hi": -0.008054787774989159
+    },
+    "SimpleExponentialSmoothing": {
+      "mean_entity_mase_A": 1.1527944418463998,
+      "mean_entity_mase_B": 1.146110566552949,
+      "median_entity_mase_A": 0.8154984489033831,
+      "median_entity_mase_B": 0.8135503584260897,
+      "median_key_mase_A": 0.7248938315396236,
+      "median_key_mase_B": 0.7237688141033404,
+      "rel_change": -0.005797976682421753,
+      "rel_change_lo": -0.00944066999310926,
+      "rel_change_hi": -0.0025909939398502915
+    },
+    "AutoTheta": {
+      "mean_entity_mase_A": 0.8647898152248205,
+      "mean_entity_mase_B": 0.8532364718993437,
+      "median_entity_mase_A": 0.6267754264520832,
+      "median_entity_mase_B": 0.6229295333779011,
+      "median_key_mase_A": 0.4876706579644505,
+      "median_key_mase_B": 0.48594340575609163,
+      "rel_change": -0.013359712524451058,
+      "rel_change_lo": -0.018173219639619785,
+      "rel_change_hi": -0.009188912904053234
+    }
+  },
+  "distribution": {
+    "HistoricAverage": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.026184036369914253,
+      "share_zero": 0.952293261207343,
+      "share_positive": 0.021522702422742707,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    },
+    "Naive": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.02980951832882546,
+      "share_zero": 0.9525234505380675,
+      "share_positive": 0.01766703113310698,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    },
+    "SeasonalNaive": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.02549346837774069,
+      "share_zero": 0.9525809978707487,
+      "share_positive": 0.021925533751510618,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    },
+    "AutoARIMA": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.03015480232491224,
+      "share_zero": 0.952293261207343,
+      "share_positive": 0.01755193646774472,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    },
+    "SimpleExponentialSmoothing": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.02825574034643494,
+      "share_zero": 0.952293261207343,
+      "share_positive": 0.019450998446222018,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    },
+    "AutoTheta": {
+      "q05": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q95": 0.0,
+      "share_negative": 0.03073027565172354,
+      "share_zero": 0.952293261207343,
+      "share_positive": 0.01697646314093342,
+      "median": 0.0,
+      "median_lo": 0.0,
+      "median_hi": 0.0,
+      "trim5": 0.0,
+      "trim5_lo": 0.0,
+      "trim5_hi": 0.0
+    }
+  },
+  "decomposition": {
+    "HistoricAverage": {
+      "num_term": -0.0008794496334123399,
+      "num_lo": -0.0013758137873239133,
+      "num_hi": -0.00038583593677589157,
+      "den_term": -0.0034041671943257582,
+      "den_lo": -0.00762898750715873,
+      "den_hi": 0.0003338485504832951,
+      "d_abs_err": -3.222203442157561e-05,
+      "d_abs_lo": -5.197718549417486e-05,
+      "d_abs_hi": -1.348618808224023e-05,
+      "d_abs_rel": -0.0006857410959923144,
+      "d_abs_rel_lo": -0.0011049683717307688,
+      "d_abs_rel_hi": -0.00028812756413432053,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 0.015703303796725545,
+      "share_keys_err_equal": 0.9708115720908398
+    },
+    "Naive": {
+      "num_term": -0.008156746989690692,
+      "num_lo": -0.010220025073862321,
+      "num_hi": -0.006206158021919888,
+      "den_term": -0.0026589491203382965,
+      "den_lo": -0.006137519785556084,
+      "den_hi": 0.0006505501515102791,
+      "d_abs_err": -0.0003176412229844707,
+      "d_abs_lo": -0.0004135841153531393,
+      "d_abs_hi": -0.0002322403716520883,
+      "d_abs_rel": -0.015617397434852914,
+      "d_abs_rel_lo": -0.02016816616884092,
+      "d_abs_rel_hi": -0.011448497727801545,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 0.008485417522445866,
+      "share_keys_err_equal": 0.9861393110732938
+    },
+    "SeasonalNaive": {
+      "num_term": 2.041969248956456e-08,
+      "num_lo": 0.0,
+      "num_hi": 6.125907746869368e-08,
+      "den_term": -0.0036063030441912634,
+      "den_lo": -0.007520601589930911,
+      "den_hi": -1.8272585203655487e-05,
+      "d_abs_err": 0.0,
+      "d_abs_lo": 0.0,
+      "d_abs_hi": 0.0,
+      "d_abs_rel": 0.0,
+      "d_abs_rel_lo": 0.0,
+      "d_abs_rel_hi": 0.0,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 1.1736400445983216e-05,
+      "share_keys_err_equal": 0.999976527199108
+    },
+    "AutoARIMA": {
+      "num_term": -0.008014675718520506,
+      "num_lo": -0.01006394055546103,
+      "num_hi": -0.006234868477742702,
+      "den_term": -0.002590522273066751,
+      "den_lo": -0.005764390976344648,
+      "den_hi": 0.0005098494120210079,
+      "d_abs_err": -0.00031126729877872144,
+      "d_abs_lo": -0.00041182680634023705,
+      "d_abs_hi": -0.00021738583564458473,
+      "d_abs_rel": -0.014976251023663796,
+      "d_abs_rel_lo": -0.019738265899028683,
+      "d_abs_rel_hi": -0.010522136767881064,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 0.015269056980224165,
+      "share_keys_err_equal": 0.9723490405492635
+    },
+    "SimpleExponentialSmoothing": {
+      "num_term": -0.0032406856404493495,
+      "num_lo": -0.0040602953481981485,
+      "num_hi": -0.002411431899351352,
+      "den_term": -0.0034431896530016134,
+      "den_lo": -0.0073340271631423815,
+      "den_hi": 3.3387474288049106e-05,
+      "d_abs_err": -0.0001246196428546793,
+      "d_abs_lo": -0.00016174554836552793,
+      "d_abs_hi": -8.563908262008052e-05,
+      "d_abs_rel": -0.004319059329577064,
+      "d_abs_rel_lo": -0.005595731975179085,
+      "d_abs_rel_hi": -0.0029851259059103605,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 0.01794495628190834,
+      "share_keys_err_equal": 0.9708115720908398
+    },
+    "AutoTheta": {
+      "num_term": -0.008574129838991126,
+      "num_lo": -0.010614316766755078,
+      "num_hi": -0.006784020243335786,
+      "den_term": -0.0029792134864855984,
+      "den_lo": -0.006708652091742048,
+      "den_hi": 0.00038981506514037417,
+      "d_abs_err": -0.0003269340709181492,
+      "d_abs_lo": -0.0004158652210005124,
+      "d_abs_hi": -0.00024191973922502413,
+      "d_abs_rel": -0.016050993367631664,
+      "d_abs_rel_lo": -0.020312787663791305,
+      "d_abs_rel_hi": -0.011916772868335026,
+      "share_keys_sB_gt_sA": 0.015257320579778182,
+      "share_keys_sB_eq_sA": 0.9708115720908398,
+      "median_log_s_ratio": 0.0,
+      "share_keys_errB_lt_errA": 0.016466169825714454,
+      "share_keys_err_equal": 0.9708115720908398
+    }
+  },
+  "mechanism": {
+    "zero_seasonal_share_A": 0.003416072174805111,
+    "imputed_share_A": 0.018003513621480685,
+    "zero_seasonal_share_B": 0.003393791771682056,
+    "imputed_share_B": 0.0035060169796092746
+  },
+  "origin": {
+    "HistoricAverage": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.0016727763264006434,
+      "term_same_origin": -0.0026108405013374543,
+      "total": -0.004283616827738097,
+      "share_from_diff_origin": 0.3905055922763122,
+      "key_mean_d_mase_diff": -0.07328025434587558,
+      "key_mean_d_mase_same": -0.0016200169752451689
+    },
+    "Naive": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.00915962692225732,
+      "term_same_origin": -0.0016560691877716648,
+      "total": -0.010815696110028984,
+      "share_from_diff_origin": 0.8468827922933176,
+      "key_mean_d_mase_diff": -0.4012609336841987,
+      "key_mean_d_mase_same": -0.0010275848696985617
+    },
+    "SeasonalNaive": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.001415603688700017,
+      "term_same_origin": -0.0021906789357987577,
+      "total": -0.0036062826244987745,
+      "share_from_diff_origin": 0.3925381996084589,
+      "key_mean_d_mase_diff": -0.06201414781144589,
+      "key_mean_d_mase_same": -0.0013593082616452422
+    },
+    "AutoARIMA": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.009006724665399316,
+      "term_same_origin": -0.0015984733261879386,
+      "total": -0.010605197991587255,
+      "share_from_diff_origin": 0.8492745418373184,
+      "key_mean_d_mase_diff": -0.3945626584301948,
+      "key_mean_d_mase_same": -0.0009918468483902092
+    },
+    "SimpleExponentialSmoothing": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.003217409967857171,
+      "term_same_origin": -0.003466465325593791,
+      "total": -0.006683875293450962,
+      "share_from_diff_origin": 0.48136894041240935,
+      "key_mean_d_mase_diff": -0.1409468899448422,
+      "key_mean_d_mase_same": -0.0021509290470574293
+    },
+    "AutoTheta": {
+      "n_diff_keys": 1190,
+      "n_entities_with_diff_keys": 829,
+      "term_diff_origin": -0.009247961532081862,
+      "term_same_origin": -0.002305381793394866,
+      "total": -0.011553343325476728,
+      "share_from_diff_origin": 0.8004576053486459,
+      "key_mean_d_mase_diff": -0.40513065767139456,
+      "key_mean_d_mase_same": -0.0014304809649642054
+    }
+  },
+  "origin_descriptive": {
+    "diff": {
+      "A": {
+        "n_keys": 1190,
+        "synthetic_share": 1.0,
+        "staleness_median": 2.0,
+        "staleness_mean": 2.0067226890756302
+      },
+      "B": {
+        "n_keys": 1190,
+        "synthetic_share": 0.0016806722689075631,
+        "staleness_median": 0.0,
+        "staleness_mean": 0.007563025210084034
+      }
+    },
+    "same": {
+      "A": {
+        "n_keys": 84015,
+        "synthetic_share": 0.00022615009224543237,
+        "staleness_median": 0.0,
+        "staleness_mean": 0.001523537463548176
+      },
+      "B": {
+        "n_keys": 84015,
+        "synthetic_share": 0.00022615009224543237,
+        "staleness_median": 0.0,
+        "staleness_mean": 0.001523537463548176
+      }
+    }
+  },
+  "origin_monthdays": [
+    {
+      "arm_a_monthday": "03-30",
+      "arm_b_monthday": "03-31",
+      "count": 1190
+    }
+  ],
+  "coverage": {
+    "anchor": {
+      "n_stamps": 1674669,
+      "n_entities": 17383,
+      "n_entities_with_off_stamp": 835,
+      "share_entities_with_off_stamp": 0.04803543692112984,
+      "stamp_monthday_counts": {
+        "03-30": 13738,
+        "03-31": 412053,
+        "06-30": 418982,
+        "09-30": 416106,
+        "12-30": 13738,
+        "12-31": 400052
+      },
+      "off_stamp_monthday_counts": {
+        "03-30": 13738,
+        "12-30": 13738
+      },
+      "by_first_stamp": {
+        "03-31": {
+          "entities": 15058,
+          "entities_with_off_stamp": 0
+        },
+        "06-30": {
+          "entities": 456,
+          "entities_with_off_stamp": 456
+        },
+        "09-30": {
+          "entities": 379,
+          "entities_with_off_stamp": 379
+        },
+        "12-31": {
+          "entities": 1490,
+          "entities_with_off_stamp": 0
+        }
+      },
+      "drift": "only from day-30 anchors"
+    },
+    "exclusive": {
+      "arm_b_only": {
+        "n": 12594,
+        "rules": [
+          {
+            "rule": "entity_not_in_A",
+            "count": 10937,
+            "subs": [
+              {
+                "label": "no per-entity screen log in the saved run",
+                "count": 10937
+              }
+            ]
+          },
+          {
+            "rule": "target_not_on_A_grid",
+            "count": 1657,
+            "subs": [
+              {
+                "label": "03-30",
+                "count": 828
+              },
+              {
+                "label": "12-30",
+                "count": 829
+              }
+            ]
+          },
+          {
+            "rule": "target_on_A_grid_missing",
+            "count": 0,
+            "subs": []
+          },
+          {
+            "rule": "failed_A_eligibility",
+            "count": 0,
+            "subs": []
+          },
+          {
+            "rule": "other",
+            "count": 0,
+            "subs": []
+          }
+        ]
+      },
+      "arm_a_only": {
+        "n": 18,
+        "rules": [
+          {
+            "rule": "entity_not_in_B",
+            "count": 18,
+            "subs": [
+              {
+                "label": "no per-entity screen log in the saved run",
+                "count": 18
+              }
+            ]
+          },
+          {
+            "rule": "target_not_on_B_grid",
+            "count": 0,
+            "subs": []
+          },
+          {
+            "rule": "target_on_B_grid_missing",
+            "count": 0,
+            "subs": []
+          },
+          {
+            "rule": "failed_B_eligibility",
+            "count": 0,
+            "subs": []
+          },
+          {
+            "rule": "other",
+            "count": 0,
+            "subs": []
+          }
+        ]
+      }
+    },
+    "unjoined_source_filings": null,
+    "unjoined_source_filings_reason": "saved prepared_series contains only grid rows"
+  },
+  "ranking": {
+    "n_entities": 17377,
+    "mean_tau": 0.9794628938757078,
+    "mean_tau_lo": 0.9777521763122795,
+    "mean_tau_hi": 0.9810926674943582,
+    "share_same_best": 0.9750244576163895,
+    "same_best_lo": 0.9726635782931461,
+    "same_best_hi": 0.9773838982563158,
+    "share_identical_rank": 0.9557461011682109,
+    "identical_lo": 0.9528111872014732,
+    "identical_hi": 0.9586810151349485,
+    "mean_rank_A": {
+      "HistoricAverage": 4.886631754618174,
+      "Naive": 3.0356793462623006,
+      "SeasonalNaive": 3.9619899867641135,
+      "AutoARIMA": 2.8459170167462737,
+      "SimpleExponentialSmoothing": 3.6043045404845486,
+      "AutoTheta": 2.66547735512459
+    },
+    "mean_rank_B": {
+      "HistoricAverage": 4.897824710824653,
+      "Naive": 3.0339241526155263,
+      "SeasonalNaive": 3.9677159463658858,
+      "AutoARIMA": 2.839155205156241,
+      "SimpleExponentialSmoothing": 3.605513034470852,
+      "AutoTheta": 2.6558669505668413
+    },
+    "aggregate_order_A": [
+      "AutoTheta",
+      "AutoARIMA",
+      "Naive",
+      "SimpleExponentialSmoothing",
+      "SeasonalNaive",
+      "HistoricAverage"
+    ],
+    "aggregate_order_B": [
+      "AutoTheta",
+      "AutoARIMA",
+      "Naive",
+      "SimpleExponentialSmoothing",
+      "SeasonalNaive",
+      "HistoricAverage"
+    ],
+    "aggregate_order_identical": true,
+    "best_model_share_A": {
+      "HistoricAverage": 0.08580307302756517,
+      "Naive": 0.26678943430971974,
+      "SeasonalNaive": 0.14455889969499913,
+      "AutoARIMA": 0.13932209242101629,
+      "SimpleExponentialSmoothing": 0.14173908039362376,
+      "AutoTheta": 0.2217874201530759
+    },
+    "best_model_share_B": {
+      "HistoricAverage": 0.08304080105887092,
+      "Naive": 0.27006963227254416,
+      "SeasonalNaive": 0.14438625769695573,
+      "AutoARIMA": 0.13978247108246533,
+      "SimpleExponentialSmoothing": 0.14007020774587098,
+      "AutoTheta": 0.22265063014329287
+    }
+  },
+  "notes": "Saved Arm A grids: drift occurs only from day-30 anchors. The manuscript illustrates a 30 June step of 30 September, 30 December, 30 March, 30 June. Error and scale terms are not both strictly negative or both strictly positive for: SeasonalNaive error 0.0000 scale -0.0036. The aggregate model order is the same on Arm A and Arm B. Unjoined source filings are not counted. The saved grid does not contain dates that failed to join it."
+}

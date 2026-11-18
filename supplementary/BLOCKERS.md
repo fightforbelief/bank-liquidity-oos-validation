@@ -29,3 +29,7 @@ Point-only diagnostic using mean(arm B) - mean(arm A) inside each entity, then a
 - SimpleExponentialSmoothing: primary -0.006683875293450963 recorded_match True; secondary -0.006850795719796667 recorded_match True.
 - AutoTheta: primary -0.011553343325476726 recorded_match True; secondary -0.004192768516977067 recorded_match True.
 The recorded point estimates match a NumPy mean of the entity-level contrast mean(arm B) - mean(arm A). `reproduce_primary` instead averages the pandas mean of `B_mase - A_mase`. Where those two differ, the difference is one unit in the last place. Some interval endpoints also differ by one unit in the last place. All 2,000 replicates were finite. The supplied estimator was not edited to force the recorded reprs.
+
+## 2026-11-18 — reproduction gate: resolution
+
+The 2026-11-06 gate blocker above came from floating-point summation order in the reference re-implementation, not from the inputs. The gate now runs the frozen Stage 18 code path (see DEVIATIONS.md, 2026-11-18) with the unchanged exact-match criterion. The gate result for that run is in `supplementary/out/gate.json`.

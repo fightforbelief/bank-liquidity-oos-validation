@@ -1,0 +1,49 @@
+{
+  "b_only_keys_entity_not_in_A": 10937,
+  "entities_not_in_A_schedule": {
+    "n_entities": 2190,
+    "in_A_grid": {
+      "not_in_A_grid": 2190
+    },
+    "A_anchor_monthday": {},
+    "A_grid_drift": {},
+    "B_first_filing_quarter_end": {
+      "06-30": 1272,
+      "09-30": 918
+    },
+    "finite_stamp_share_A_mean": null,
+    "finite_stamp_share_A_median": null,
+    "finite_stamp_share_B_mean": 0.9795850834035745,
+    "finite_stamp_share_B_median": 1.0
+  },
+  "entities_in_both_schedules": {
+    "n_entities": 17377,
+    "in_A_grid": {
+      "A": 17377
+    },
+    "A_anchor_monthday": {
+      "03-31": 15058,
+      "06-30": 451,
+      "09-30": 378,
+      "12-31": 1490
+    },
+    "A_grid_drift": {
+      "all_quarter_end": 16548,
+      "off_quarter_end_stamp": 829
+    },
+    "B_first_filing_quarter_end": {
+      "03-31": 15058,
+      "06-30": 451,
+      "09-30": 378,
+      "12-31": 1490
+    },
+    "finite_stamp_share_A_mean": 0.97325056967011,
+    "finite_stamp_share_A_median": 1.0,
+    "finite_stamp_share_B_mean": 0.9965277163288231,
+    "finite_stamp_share_B_median": 1.0
+  },
+  "n_entities_schedule": {
+    "A": 17383,
+    "B": 19567
+  }
+}

@@ -1,0 +1,333 @@
+{
+  "characteristics": {
+    "drifted": {
+      "n_entities": 829,
+      "share_first_at_panel_start": 0.0,
+      "first_year_median": 1985.0,
+      "first_year_median_entrants": 1985.0,
+      "n_obs_median": 58.0,
+      "level_mean_median": 0.0737761466084582,
+      "abs_diff_mean_median": 0.020808256562157762
+    },
+    "excluded": {
+      "n_entities": 2190,
+      "share_first_at_panel_start": 0.0,
+      "first_year_median": 1987.0,
+      "first_year_median_entrants": 1987.0,
+      "n_obs_median": 60.0,
+      "level_mean_median": 0.07630286530466454,
+      "abs_diff_mean_median": 0.021357180747300527
+    },
+    "unaffected": {
+      "n_entities": 16548,
+      "share_first_at_panel_start": 0.8083152042542906,
+      "first_year_median": 1976.0,
+      "first_year_median_entrants": 1990.0,
+      "n_obs_median": 84.0,
+      "level_mean_median": 0.07117937524871262,
+      "abs_diff_mean_median": 0.016152979859800867
+    },
+    "entrants_first_year_by_group": {
+      "drifted": {
+        "1976": 53,
+        "1977": 32,
+        "1978": 32,
+        "1979": 40,
+        "1980": 74,
+        "1981": 35,
+        "1982": 38,
+        "1983": 42,
+        "1984": 45,
+        "1985": 49,
+        "1986": 36,
+        "1987": 24,
+        "1988": 31,
+        "1989": 28,
+        "1990": 16,
+        "1991": 20,
+        "1992": 10,
+        "1993": 14,
+        "1994": 8,
+        "1995": 12,
+        "1996": 22,
+        "1997": 20,
+        "1998": 19,
+        "1999": 27,
+        "2000": 19,
+        "2001": 14,
+        "2002": 14,
+        "2003": 9,
+        "2004": 10,
+        "2005": 7,
+        "2006": 15,
+        "2007": 8,
+        "2008": 5,
+        "2009": 1
+      },
+      "excluded": {
+        "1976": 203,
+        "1977": 58,
+        "1978": 43,
+        "1979": 70,
+        "1980": 168,
+        "1981": 78,
+        "1982": 93,
+        "1983": 85,
+        "1984": 107,
+        "1985": 84,
+        "1986": 60,
+        "1987": 59,
+        "1988": 58,
+        "1989": 51,
+        "1990": 55,
+        "1991": 54,
+        "1992": 21,
+        "1993": 40,
+        "1994": 22,
+        "1995": 27,
+        "1996": 39,
+        "1997": 60,
+        "1998": 67,
+        "1999": 75,
+        "2000": 58,
+        "2001": 50,
+        "2002": 33,
+        "2003": 39,
+        "2004": 47,
+        "2005": 58,
+        "2006": 100,
+        "2007": 60,
+        "2008": 31,
+        "2009": 16,
+        "2010": 7,
+        "2011": 12,
+        "2013": 2
+      },
+      "unaffected": {
+        "1976": 38,
+        "1977": 80,
+        "1978": 115,
+        "1979": 81,
+        "1980": 114,
+        "1981": 117,
+        "1982": 134,
+        "1983": 145,
+        "1984": 135,
+        "1985": 142,
+        "1986": 100,
+        "1987": 100,
+        "1988": 84,
+        "1989": 126,
+        "1990": 79,
+        "1991": 52,
+        "1992": 59,
+        "1993": 64,
+        "1994": 48,
+        "1995": 55,
+        "1996": 63,
+        "1997": 85,
+        "1998": 79,
+        "1999": 104,
+        "2000": 95,
+        "2001": 64,
+        "2002": 40,
+        "2003": 49,
+        "2004": 40,
+        "2005": 73,
+        "2006": 68,
+        "2007": 73,
+        "2008": 46,
+        "2009": 14,
+        "2010": 6,
+        "2011": 20,
+        "2012": 384,
+        "2013": 1
+      }
+    }
+  },
+  "arm_b_accuracy": {
+    "excluded": {
+      "n_entities": 2190,
+      "n_keys": 10937,
+      "mean_entity_mase": {
+        "HistoricAverage": 1.7270968838625194,
+        "Naive": 0.8752999744038981,
+        "SeasonalNaive": 1.1892862659260475,
+        "AutoARIMA": 0.9280652919112502,
+        "SimpleExponentialSmoothing": 1.1711386067045053,
+        "AutoTheta": 0.9030458481781927
+      },
+      "median_entity_mase": {
+        "HistoricAverage": 1.1764268208923734,
+        "Naive": 0.6018727426169703,
+        "SeasonalNaive": 0.79265784633381,
+        "AutoARIMA": 0.6234794238112873,
+        "SimpleExponentialSmoothing": 0.7807085696033579,
+        "AutoTheta": 0.6144472858778485
+      },
+      "mean_rank": {
+        "HistoricAverage": 4.697945205479452,
+        "Naive": 2.804337899543379,
+        "SeasonalNaive": 4.028310502283105,
+        "AutoARIMA": 2.9844748858447487,
+        "SimpleExponentialSmoothing": 3.6707762557077626,
+        "AutoTheta": 2.8141552511415524
+      },
+      "best_share": {
+        "HistoricAverage": 0.10136986301369863,
+        "Naive": 0.31004566210045664,
+        "SeasonalNaive": 0.12876712328767123,
+        "AutoARIMA": 0.11917808219178082,
+        "SimpleExponentialSmoothing": 0.14429223744292238,
+        "AutoTheta": 0.1963470319634703
+      },
+      "aggregate_order": [
+        "Naive",
+        "AutoTheta",
+        "AutoARIMA",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ]
+    },
+    "drifted": {
+      "n_entities": 829,
+      "n_keys": 4144,
+      "mean_entity_mase": {
+        "HistoricAverage": 1.80230892615274,
+        "Naive": 0.9019802666457322,
+        "SeasonalNaive": 1.2531515882008053,
+        "AutoARIMA": 0.9546300996225657,
+        "SimpleExponentialSmoothing": 1.212036612604181,
+        "AutoTheta": 0.9265873885404958
+      },
+      "median_entity_mase": {
+        "HistoricAverage": 1.2738181175504855,
+        "Naive": 0.5395368898227775,
+        "SeasonalNaive": 0.7347618200907278,
+        "AutoARIMA": 0.5672929195726896,
+        "SimpleExponentialSmoothing": 0.7217304381446111,
+        "AutoTheta": 0.5549906124574244
+      },
+      "mean_rank": {
+        "HistoricAverage": 4.825693606755126,
+        "Naive": 2.773220747889023,
+        "SeasonalNaive": 3.994571773220748,
+        "AutoARIMA": 2.9987937273823886,
+        "SimpleExponentialSmoothing": 3.6851628468033777,
+        "AutoTheta": 2.7225572979493364
+      },
+      "best_share": {
+        "HistoricAverage": 0.09047044632086852,
+        "Naive": 0.3208685162846803,
+        "SeasonalNaive": 0.15319662243667068,
+        "AutoARIMA": 0.10132689987937274,
+        "SimpleExponentialSmoothing": 0.1278648974668275,
+        "AutoTheta": 0.20627261761158022
+      },
+      "aggregate_order": [
+        "Naive",
+        "AutoTheta",
+        "AutoARIMA",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ]
+    },
+    "unaffected": {
+      "n_entities": 16548,
+      "n_keys": 82718,
+      "mean_entity_mase": {
+        "HistoricAverage": 1.8874867845458942,
+        "Naive": 0.8712990808098525,
+        "SeasonalNaive": 1.16142375689129,
+        "AutoARIMA": 0.8658509627712312,
+        "SimpleExponentialSmoothing": 1.1390391207910369,
+        "AutoTheta": 0.8480423292756011
+      },
+      "median_entity_mase": {
+        "HistoricAverage": 1.4276039157966034,
+        "Naive": 0.656952563191308,
+        "SeasonalNaive": 0.821613398819365,
+        "AutoARIMA": 0.6482645728827703,
+        "SimpleExponentialSmoothing": 0.8179662760568135,
+        "AutoTheta": 0.6276566311184959
+      },
+      "mean_rank": {
+        "HistoricAverage": 4.901770606719845,
+        "Naive": 3.051939811457578,
+        "SeasonalNaive": 3.965766255740875,
+        "AutoARIMA": 2.8316110708242688,
+        "SimpleExponentialSmoothing": 3.600193376843123,
+        "AutoTheta": 2.64871887841431
+      },
+      "best_share": {
+        "HistoricAverage": 0.08321247280638143,
+        "Naive": 0.26655789219240994,
+        "SeasonalNaive": 0.14473048102489727,
+        "AutoARIMA": 0.14025864152767706,
+        "SimpleExponentialSmoothing": 0.1409233744259125,
+        "AutoTheta": 0.22431713802272177
+      },
+      "aggregate_order": [
+        "AutoTheta",
+        "AutoARIMA",
+        "Naive",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ]
+    }
+  },
+  "excluded_minus_unaffected_mean_entity_mase": {
+    "HistoricAverage": {
+      "est": -0.16038990068336756,
+      "lo": -0.23993347046541666,
+      "hi": -0.07267149563671936
+    },
+    "Naive": {
+      "est": 0.004000893594047428,
+      "lo": -0.04321421180563377,
+      "hi": 0.05272193655070237
+    },
+    "SeasonalNaive": {
+      "est": 0.02786250903475329,
+      "lo": -0.03792792125068031,
+      "hi": 0.09706768633763513
+    },
+    "AutoARIMA": {
+      "est": 0.06221432914002023,
+      "lo": 0.007760889877192145,
+      "hi": 0.11720663129767916
+    },
+    "SimpleExponentialSmoothing": {
+      "est": 0.032099485913463344,
+      "lo": -0.030100850124517346,
+      "hi": 0.10191517229443255
+    },
+    "AutoTheta": {
+      "est": 0.05500351890258992,
+      "lo": 0.0034028021090989824,
+      "hi": 0.10792599063267228
+    }
+  },
+  "median_mase_ratio_to_naive": {
+    "excluded": {
+      "HistoricAverage": 1.791562908018082,
+      "Naive": 1.0,
+      "SeasonalNaive": 1.3042798259897181,
+      "AutoARIMA": 1.0,
+      "SimpleExponentialSmoothing": 1.2221907821673188,
+      "AutoTheta": 1.0048213475606063
+    },
+    "unaffected": {
+      "HistoricAverage": 1.9916152352999956,
+      "Naive": 1.0,
+      "SeasonalNaive": 1.245108125949478,
+      "AutoARIMA": 1.0,
+      "SimpleExponentialSmoothing": 1.1479043802852404,
+      "AutoTheta": 0.965520277567292
+    }
+  },
+  "notes": "Exploratory, specified after the post-hoc results were seen. Arm B forecasts only; no refit."
+}

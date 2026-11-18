@@ -17,18 +17,19 @@
 \newcommand{\val}[1]{\ifcsname p12@#1\endcsname\csname p12@#1\endcsname\else\textcolor{red}{\textbf{[#1]}}\fi}
 \makeatother
 \IfFileExists{generated/values.tex}{\input{generated/values.tex}}{}
-\newcommand{\gentable}[1]{\IfFileExists{generated/#1.tex}{\input{generated/#1.tex}}{\begin{center}\fbox{\textcolor{red}{\textbf{[table #1 not generated]}}}\end{center}}}
-\newcommand{\genfigure}[1]{\IfFileExists{generated/#1.pdf}{\includegraphics[width=0.8\linewidth]{generated/#1.pdf}}{\fbox{\textcolor{red}{\textbf{[figure #1 not generated]}}}}}
+\newcommand{\fittable}[1]{\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}}
+\newcommand{\gentable}[1]{\IfFileExists{generated/#1.tex}{{\small\setlength{\tabcolsep}{4pt}\input{generated/#1.tex}}}{\begin{center}\fbox{\textcolor{red}{\textbf{[table \detokenize{#1} not generated]}}}\end{center}}}
+\newcommand{\genfigure}[1]{\IfFileExists{generated/#1.pdf}{\includegraphics[width=0.8\linewidth]{generated/#1.pdf}}{\fbox{\textcolor{red}{\textbf{[figure \detokenize{#1} not generated]}}}}}
 
 \title{When ``Quarterly'' Drifts: Grid Construction, Target Coverage,\\ and Forecast Accuracy for U.S.\ Bank Cash Liquidity}
 \author{Hanqing Yang\thanks{\textcolor{red}{[affiliation]}. Contact: \texttt{hanqing.yang189@gmail.com}.}}
-\date{\textcolor{red}{[date of this version]}}
+\date{November 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A quarterly forecasting benchmark has to place filings on a regular date grid, and that choice is rarely reported. In the inspected implementation of the open financial-market forecasting benchmark of Bejarano et al.\ (FTSFR), the quarterly code is mapped to a three-month step (\texttt{3mo}) that can drift from calendar quarter-ends to dates such as 30~December and 30~March, where quarter-end filings no longer join. We compare this grid with a strict calendar quarter-end grid for U.S.\ bank cash liquidity (cash/assets) under a protocol fixed before full-sample forecasts were seen. The quarter-end grid yields 97,799 eligible one-step targets against 85,223 on the \texttt{3mo} grid; 12,594 targets (12.9\%) exist only on the quarter-end grid. On the 85,205 common entity--target keys from 17,377 banks, the pre-specified paired difference in entity-level seasonal MASE (quarter-end minus \texttt{3mo}) is negative for all six baselines, from $-0.0036$ (SeasonalNaive) to $-0.0116$ (AutoTheta), and every 95\% entity-cluster bootstrap interval lies below zero. Exploratory analyses show that these differences correspond to \val{abs-relchange-range} of the \texttt{3mo}-grid MASE level; that \val{abs-decomp-summary}; that the 1,190 keys whose forecast origins differ between grids (1.4\% of keys) account for \val{abs-diff-origin-summary}; and that per-bank model rankings \val{abs-ranking-summary}.
+A quarterly forecasting benchmark has to place filings on a regular date grid, and that choice is rarely reported. In the inspected implementation of the open financial-market forecasting benchmark of Bejarano et al.\ (FTSFR), the quarterly code is mapped to a three-month step (\texttt{3mo}) that can drift from calendar quarter-ends to dates such as 30~December and 30~March, where quarter-end filings no longer join. We compare this grid with a strict calendar quarter-end grid for U.S.\ bank cash liquidity (cash/assets) under a protocol fixed before full-sample forecasts were seen. In the saved grids, drift occurs only for banks whose first filing is dated 30~June or 30~September. The \texttt{3mo} grid retains 17,383 banks, the count the benchmark reports; the quarter-end grid retains 19,567. It yields 97,799 eligible one-step targets against 85,223, and 12,594 targets (12.9\%) exist only on the quarter-end grid, all from banks with a 30~June or 30~September first filing. On the 85,205 common entity--target keys from 17,377 banks, the pre-specified paired difference in entity-level seasonal MASE (quarter-end minus \texttt{3mo}) is negative for all six baselines, from $-0.0036$ (SeasonalNaive) to $-0.0116$ (AutoTheta), and every 95\% entity-cluster bootstrap interval lies below zero. Exploratory analyses show that the bank-level difference is exactly zero for about 95\% of banks, whose two grids coincide; that the averages correspond to \val{abs-relchange-range} of the \texttt{3mo}-grid MASE level; that \val{abs-decomp-summary}; that the 1,190 keys whose forecast origins differ between grids (1.4\% of keys) account for \val{abs-diff-origin-summary}; and that per-bank model rankings \val{abs-ranking-summary}. The main cost of the \texttt{3mo} grid in this series is coverage, not accuracy.
 \end{abstract}
 
 \noindent\textbf{Keywords:} forecast evaluation; benchmark implementation; quarterly grid; MASE; bank cash liquidity; entity-cluster bootstrap.
@@ -48,6 +49,8 @@ We study the bank cash-liquidity series of the FTSFR benchmark~\cite{bejarano202
   \item \textbf{Ranking stability.} We report, as an exploratory analysis, whether the per-bank and aggregate orderings of the six models change between grids (Section~\ref{sec:ranking}).
 \end{enumerate}
 We do not re-estimate the benchmark's published MASE, RMSE, or out-of-sample $R^2$ tables, and no model is selected or tuned.
+
+\paragraph{Related work.} Large forecasting benchmarks and competitions, such as the M4 competition~\cite{makridakis2020} and the Monash archive~\cite{godahewa2021}, made results comparable across methods by fixing data, horizons, and metrics. Comparability also depends on preprocessing choices that are rarely reported, and reviews of evaluation practice list data leakage, inappropriate scaling, and undocumented preprocessing among common pitfalls~\cite{tashman2000,hewamalage2023}. Seasonal MASE~\cite{hyndman2006} is scale-free because it divides by an in-sample naive error, so any preprocessing step that changes the training history also changes the denominator. Our decomposition in Section~\ref{sec:decomp} separates that channel from the forecast error. Paired comparisons of forecast accuracy usually rely on loss differentials~\cite{diebold1995}. Because our pairs share a bank, we resample whole banks~\cite{davison1997,field2007,cameron2008}. To our knowledge, the date-grid convention used to place quarterly filings has not previously been studied as a source of variation in benchmark results.
 
 % ===========================================================================
 \section{Data and target}
@@ -71,6 +74,8 @@ Both arms apply the same quality rule: total length 27, at least 18 finite train
 
 \subsection{Target coverage}\label{sec:coverage}
 Table~\ref{tab:counts} reports evaluation counts, independently rebuilt from the saved schedule and pair file. The quarter-end grid admits 12,576 more targets than the \texttt{3mo} grid. Of its 97,799 targets, 12,594 have no counterpart on the \texttt{3mo} grid, while only 18 \texttt{3mo} targets have no quarter-end counterpart. Table~\ref{tab:bonly} classifies the Arm~B-only targets by the reason they are absent from Arm~A.
+
+The classification has two parts. The 1,657 targets in the second row sit in banks whose Arm~A grid exists but has drifted: the target date (31~March or 31~December) is not a stamp, and the stamp in that quarter is 30~March or 30~December. \val{coverage-followup-text} The Arm~A schedule covers 17,383 banks, the retained count reported for this series by the benchmark~\cite{bejarano2026}; the Arm~B schedule covers 19,567. Every Arm~B-only target therefore belongs to a bank whose first filing is dated 30~June or 30~September. The 18 Arm~A-only targets come from the 6 banks that have Arm~A schedule rows but none on Arm~B. This follow-up was specified after the classification was seen and is exploratory.
 
 \begin{table}[t]
 \centering
@@ -103,9 +108,11 @@ Model failures / undefined MASE denominators & 0 / 0 \\
 % ===========================================================================
 \section{Models, metric, and estimand}\label{sec:estimand}
 % ===========================================================================
+\begin{sloppypar}
 \paragraph{Baselines.} The model list was fixed before the full-sample run: \texttt{HistoricAverage()}, \texttt{Naive()}, \texttt{SeasonalNaive(season\_length=4)}, \texttt{AutoARIMA(season\_length=4)}, \texttt{SimpleExponentialSmoothing(alpha=0.1)}, and \texttt{AutoTheta(season\_length=4)}, from StatsForecast 2.1.1~\cite{statsforecast} under Python 3.12. Each model is called once per forecast with no fallback; no failure occurred.
+\end{sloppypar}
 
-\paragraph{Metric.} The primary metric is seasonal MASE with period four. For a forecast with absolute error $e$, the scale $s$ is the mean absolute lag-4 difference of finite values in that forecast's own training history, and $\mathrm{MASE}=e/s$. MASE is undefined when no lag-4 pair exists or $s=0$; no constant is added. An independent audit recomputed all 1,098,132 MASE values from saved predictions and training grids and matched every stored value.
+\paragraph{Metric.} The primary metric is seasonal MASE~\cite{hyndman2006} with period four. For a forecast with absolute error $e$, the scale $s$ is the mean absolute lag-4 difference of finite values in that forecast's own training history, and $\mathrm{MASE}=e/s$. MASE is undefined when no lag-4 pair exists or $s=0$; no constant is added. An independent audit recomputed all 1,098,132 MASE values from saved predictions and training grids and matched every stored value.
 
 \paragraph{Estimand.} For bank $i$ and a given model,
 \begin{equation}\label{eq:delta}
@@ -156,7 +163,9 @@ Table~\ref{tab:levels} reports each model's MASE level on the common keys under 
 \end{table}
 
 \subsection{Distribution across banks}
-Because MASE is a ratio, a few banks with small scales could dominate a mean. Table~\ref{tab:dist} reports quantiles of $\delta_i$, the share of banks with $\delta_i<0$, and two robust location estimates (median and 5\% trimmed mean) with bootstrap intervals. \val{dist-text}
+Because MASE is a ratio, a few banks with small scales could dominate a mean. Table~\ref{tab:dist} reports the sign of $\delta_i$ across banks and two robust location estimates (median and 5\% trimmed mean) with bootstrap intervals. \val{dist-text}
+
+This follows from the grid mechanism. For a bank whose Arm~A grid has no drifted stamp, the two arms are the same grid with the same values, so all six models produce identical forecasts and $\delta_i=0$. Only the 829 banks with a drifted Arm~A grid (4.8\% of the common set) can contribute, and the number of banks with $\delta_i\neq0$ is between 824 and 829 for every model. The primary estimate is therefore $829/17{,}377$ times the mean of $\delta_i$ over the drifted banks. That mean is about $-0.08$ (SeasonalNaive) to $-0.24$ (AutoTheta), roughly twenty times the population average. This conditional figure is arithmetic on the reported estimates, with no separate interval.
 
 \begin{table}[t]
 \centering
@@ -172,6 +181,8 @@ A lower MASE on Arm~B can arise because forecasts are closer to the target or be
   + \underbrace{\tfrac12(e_A+e_B)\left(\tfrac1{s_B}-\tfrac1{s_A}\right)}_{\text{scale term}},
 \end{equation}
 the symmetric (Shapley) split of the change. Averaging each term first within and then across banks splits the primary estimate exactly into two parts. Table~\ref{tab:decomp} reports both terms, together with the unscaled difference in mean absolute error, which is in units of the cash-to-assets ratio and needs no scaling at all. \val{decomp-text}
+
+The scale channel is weaker than the forward-fill argument suggests. The share of zero lag-4 differences is the same on both arms, although Arm~A training histories contain more imputed positions (1.8\% against 0.4\%). The scale-term intervals include zero for five of the six models. The error-term intervals exclude zero for every model except SeasonalNaive, whose absolute errors are identical on the two grids for every key, so its whole estimate is in the scale term.
 
 \begin{table}[t]
 \centering
@@ -206,32 +217,19 @@ The question that motivated the project was whether the relative performance of 
 % ===========================================================================
 \section{Discussion}
 % ===========================================================================
-% NOTE FOR THE AUTHOR: the paragraphs below must be finalised after the
-% exploratory numbers exist. Each paragraph marked [CHOOSE] has variants; keep
-% the one the numbers support and delete the others.
+The pre-specified result is narrow and robust: for every baseline, average seasonal MASE is lower on the calendar quarter-end grid, and the sign survives removal of the keys whose origins differ. The exploratory analyses put that result in proportion and locate it.
 
-The pre-specified result is narrow and robust: for every baseline, average seasonal MASE is lower on the calendar quarter-end grid, and the sign survives removal of the keys whose origins differ. Taken alone, though, the size of that difference says little, because it is not expressed relative to anything.
+\paragraph{Size.} Measured against the MASE level, the population differences are small: \val{abs-relchange-range} of the Arm~A level. They are averages over banks most of which are unaffected. The grid convention matters a great deal for the 4.8\% of retained banks whose grid drifts, and not at all for the rest. A population average therefore understates how much the convention matters for any single affected bank.
 
-% [CHOOSE: scale]
-% (a) Relative to the Arm A level the differences are small (\val{abs-relchange-range}); the grid choice is unlikely to matter for headline comparisons of these baselines, but the coverage loss is not small.
-% (b) Relative to the Arm A level the differences are material (\val{abs-relchange-range}), comparable to gaps between competing baselines.
-\val{disc-scale}
+\paragraph{Mechanism.} For the three models that weight recent observations most (Naive, AutoARIMA, AutoTheta), about three quarters of the estimate is in the error term, and the unscaled absolute error is also lower on Arm~B. The difference is therefore not mainly an artefact of the MASE denominator. The scale term is small, its intervals include zero for five models, and the expected excess of zero lag-4 differences on Arm~A does not appear. SeasonalNaive is consistent with this reading: its absolute errors are identical on the two grids, and its whole estimate is in the scale term.
 
-% [CHOOSE: mechanism]
-% (a) Most of the MASE change is in the scale term: the 3mo grid mainly shrinks the MASE denominator through forward-filled quarters, so its MASE values are inflated relative to forecast error rather than reflecting worse forecasts.
-% (b) Most of the change is in the error term, and the unscaled absolute error is also lower on Arm B: forecasts are genuinely more accurate on the quarter-end grid.
-% (c) Both terms contribute materially (report the split).
-\val{disc-mechanism}
+\paragraph{Origins.} The error-term effect is concentrated where the grids disagree about the origin. On all 1,190 different-origin keys, the Arm~A origin is a generated 30~March stamp, typically two grid steps after the last stored filing, while the Arm~B origin is the observed 31~March filing. These 1.4\% of keys carry 80--85\% of the estimate for Naive, AutoARIMA, and AutoTheta, and 39--48\% for the three models that depend less on the last observation. The models that use the most recent value are the ones a stale, forward-filled origin hurts most.
 
-For the recency-weighted models, a large part of the primary estimate is concentrated in the 1.4\% of keys whose \texttt{3mo} origin is a generated date: \val{disc-origin}
+\paragraph{Rankings.} Model rankings are stable. The aggregate order is identical on both grids, the per-bank mean Kendall $\tau_b$ is about $0.98$, and about 96\% of banks have identical full rankings. A benchmark that reports only the ordering of these six baselines would reach the same conclusion on either grid.
 
-% [CHOOSE: ranking]
-% (a) Rankings are largely stable: aggregate order identical, high mean tau.
-% (b) Aggregate order is stable but per-bank rankings change often (mean tau well below 1).
-% (c) Aggregate order changes (name the swapped models).
-\val{disc-ranking}
+\paragraph{Coverage.} The larger consequence of the \texttt{3mo} grid in this series is which banks and targets are evaluated at all. Every one of the 12,594 targets lost under Arm~A belongs to a bank whose first filing is dated 30~June or 30~September. Of the 3,019 such banks, 2,190 have no Arm~A grid at all, and the remaining 829 keep a grid on which half of each year's filings fail to join. The benchmark's reported count of 17,383 retained banks equals the Arm~A count; a quarter-end grid retains 19,567. Exclusion is therefore determined by the calendar date of a bank's first filing, not by any property of its liquidity series that the quality rule is meant to screen.
 
-The practical lesson concerns benchmark construction rather than any model. A grid step that is ``quarterly'' in name removed about one in eight evaluable targets from this series and changed the inputs of the targets it kept. Benchmarks that evaluate quarterly panels should state the grid generator explicitly, report target counts per grid, and check that stored filing dates join the grid.
+The practical lesson concerns benchmark construction rather than any model. A grid step that is ``quarterly'' in name removed about one in eight evaluable targets and about one in nine eligible banks from this series, and changed the inputs of a further set of targets. Benchmarks that evaluate quarterly panels should state the grid generator explicitly, report entity and target counts per grid, and check that stored filing dates join the grid.
 
 % ===========================================================================
 \section{Limitations}
@@ -241,6 +239,7 @@ The practical lesson concerns benchmark construction rather than any model. A gr
   \item The six intervals are separate and not familywise-adjusted; no equivalence margin was set, so no difference is classified as negligible.
   \item The analyses of Sections~\ref{sec:explore}--\ref{sec:ranking} were specified after the primary results were seen and should be read as exploratory.
   \item The primary comparison is restricted to targets present on both grids. Targets present only on the quarter-end grid (Table~\ref{tab:bonly}) are not scored in the paired comparison, and the banks and quarters they cover may differ systematically from the common set.
+  \item The saved run does not record why the 2,190 banks are absent from the Arm~A grid. We show that all of them have a 30~June or 30~September first filing, which is the condition for drift, but not which screen criterion removed each one. The number of stored filings that fail to join an Arm~A stamp is not reported, because the saved grids do not contain the unjoined dates.
   \item We did not reproduce the benchmark's published forecast tables, and ``implementation-faithful'' refers to the inspected code path, not to verified author intent or to the build of the published paper.
 \end{enumerate}
 
@@ -296,7 +295,16 @@ AutoTheta & $-0.004192768516977067$ & $-0.007726973843804417$ & $-0.001124889815
 \section{Matching, imputation, and bootstrap details}
 A primary key is an entity together with an exact target timestamp; each arm stores its own origin. Pairs are kept when targets agree, including when origins differ; the secondary key also requires equal origins. Unmatched targets receive no invented counterpart. Training values are the prepared imputed series, excluding positions after the origin and the target itself. Leading positions still missing after imputation are omitted; later missing positions are kept so that lag-4 spacing is preserved. The bootstrap indexes entities in order of first appearance in the saved pair file. The audit reproduced the stored point estimates and interval endpoints both from stored MASE values and from MASE recomputed from the training grids.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
+\bibitem{cameron2008} A. Colin Cameron, Jonah B. Gelbach, and Douglas L. Miller. Bootstrap-based improvements for inference with clustered errors. \emph{The Review of Economics and Statistics}, 90(3):414--427, 2008. doi:10.1162/rest.90.3.414.
+\bibitem{davison1997} A. C. Davison and D. V. Hinkley. \emph{Bootstrap Methods and Their Application}. Cambridge University Press, 1997.
+\bibitem{diebold1995} Francis X. Diebold and Roberto S. Mariano. Comparing predictive accuracy. \emph{Journal of Business \& Economic Statistics}, 13(3):253--263, 1995.
+\bibitem{field2007} Christopher A. Field and Alan H. Welsh. Bootstrapping clustered data. \emph{Journal of the Royal Statistical Society: Series B}, 69(3):369--390, 2007.
+\bibitem{godahewa2021} Rakshitha Godahewa, Christoph Bergmeir, Geoffrey I. Webb, Rob J. Hyndman, and Pablo Montero-Manso. Monash time series forecasting archive. In \emph{Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks}, 2021.
+\bibitem{hewamalage2023} Hansika Hewamalage, Klaus Ackermann, and Christoph Bergmeir. Forecast evaluation for data scientists: common pitfalls and best practices. \emph{Data Mining and Knowledge Discovery}, 37:788--832, 2023.
+\bibitem{hyndman2006} Rob J. Hyndman and Anne B. Koehler. Another look at measures of forecast accuracy. \emph{International Journal of Forecasting}, 22(4):679--688, 2006. doi:10.1016/j.ijforecast.2006.03.001.
+\bibitem{makridakis2020} Spyros Makridakis, Evangelos Spiliotis, and Vassilios Assimakopoulos. The M4 Competition: 100,000 time series and 61 forecasting methods. \emph{International Journal of Forecasting}, 36(1):54--74, 2020. doi:10.1016/j.ijforecast.2019.04.014.
+\bibitem{tashman2000} Leonard J. Tashman. Out-of-sample tests of forecasting accuracy: an analysis and review. \emph{International Journal of Forecasting}, 16(4):437--450, 2000.
 \bibitem{bejarano2026} Jeremy Bejarano, Viren Desai, Kausthub Keshava, Arsh Kumar, Zixiao Wang, Vincent Hanyang Xu, and Yangge Xu. An open benchmark for evaluating time series forecasting methods across financial markets. Working Paper 26-05, Office of Financial Research, 2026. \url{https://www.financialresearch.gov/working-papers/2026/08/25/time-series-forecasting-methods-financial-markets/}.
 \bibitem{drechsler2017} Itamar Drechsler, Alexi Savov, and Philipp Schnabl. The deposits channel of monetary policy. \emph{The Quarterly Journal of Economics}, 132(4):1819--1876, 2017. doi:10.1093/qje/qjx019.
 \bibitem{hyndman1996} Rob J. Hyndman and Yanan Fan. Sample quantiles in statistical packages. \emph{The American Statistician}, 50(4):361--365, 1996. doi:10.1080/00031305.1996.10473566.

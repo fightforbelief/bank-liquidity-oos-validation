@@ -63,3 +63,7 @@ experiments/preflight/
 !/supplementary/BLOCKERS.md
 !/supplementary/out/RESULTS_SUMMARY.md
 
+
+# Confirmatory protocol, freeze record, and deviation log (frozen before the confirmatory runs)
+!/confirm/PROTOCOL.md
+!/confirm/DEVIATIONS.md

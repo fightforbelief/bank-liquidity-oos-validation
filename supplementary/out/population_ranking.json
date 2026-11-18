@@ -1,0 +1,604 @@
+{
+  "full_population": {
+    "A": {
+      "n_entities": 17383,
+      "mean": {
+        "HistoricAverage": 1.895620175004278,
+        "Naive": 0.8895544788282133,
+        "SeasonalNaive": 1.1788179905016636,
+        "AutoARIMA": 0.8873183914331518,
+        "SimpleExponentialSmoothing": 1.157203066950952,
+        "AutoTheta": 0.8692963859837181
+      },
+      "order": [
+        "AutoTheta",
+        "AutoARIMA",
+        "Naive",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ],
+      "pairs": {
+        "HistoricAverage - Naive": {
+          "est": 1.0060656961760648,
+          "lo": 0.9827624488467149,
+          "hi": 1.0294538112787472,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SeasonalNaive": {
+          "est": 0.7168021845026145,
+          "lo": 0.6945051466117023,
+          "hi": 0.7388959858872306,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoARIMA": {
+          "est": 1.008301783571126,
+          "lo": 0.9858146745128646,
+          "hi": 1.0304633851403184,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SimpleExponentialSmoothing": {
+          "est": 0.7384171080533259,
+          "lo": 0.7199824382688965,
+          "hi": 0.7561825965693333,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoTheta": {
+          "est": 1.02632378902056,
+          "lo": 1.0042748306140783,
+          "hi": 1.0487177375927834,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SeasonalNaive": {
+          "est": -0.2892635116734503,
+          "lo": -0.3013951103286205,
+          "hi": -0.27740936577515557,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoARIMA": {
+          "est": 0.0022360873950614257,
+          "lo": -0.0034589247447196297,
+          "hi": 0.008060526305158185,
+          "share_reps_i_better": 0.231
+        },
+        "Naive - SimpleExponentialSmoothing": {
+          "est": -0.26764858812273884,
+          "lo": -0.2806064801385137,
+          "hi": -0.25523461071948256,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoTheta": {
+          "est": 0.0202580928444952,
+          "lo": 0.015112559822694068,
+          "hi": 0.025619620776882433,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoARIMA": {
+          "est": 0.29149959906851175,
+          "lo": 0.28233452674732556,
+          "hi": 0.3013032486873591,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - SimpleExponentialSmoothing": {
+          "est": 0.021614923550711485,
+          "lo": 0.012970574446866601,
+          "hi": 0.03106948443750958,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoTheta": {
+          "est": 0.3095216045179455,
+          "lo": 0.2999822274696975,
+          "hi": 0.31943568850554416,
+          "share_reps_i_better": 0.0
+        },
+        "AutoARIMA - SimpleExponentialSmoothing": {
+          "est": -0.26988467551780027,
+          "lo": -0.280868984320788,
+          "hi": -0.2596383295736861,
+          "share_reps_i_better": 1.0
+        },
+        "AutoARIMA - AutoTheta": {
+          "est": 0.018022005449433776,
+          "lo": 0.013816697731334284,
+          "hi": 0.022334043324453493,
+          "share_reps_i_better": 0.0
+        },
+        "SimpleExponentialSmoothing - AutoTheta": {
+          "est": 0.28790668096723404,
+          "lo": 0.2777377565120413,
+          "hi": 0.29894337382544317,
+          "share_reps_i_better": 0.0
+        }
+      },
+      "p_first": {
+        "HistoricAverage": 0.0,
+        "Naive": 0.0,
+        "SeasonalNaive": 0.0,
+        "AutoARIMA": 0.0,
+        "SimpleExponentialSmoothing": 0.0,
+        "AutoTheta": 1.0
+      }
+    },
+    "B": {
+      "n_entities": 19567,
+      "mean": {
+        "HistoricAverage": 1.8659266921911837,
+        "Naive": 0.8730467508680608,
+        "SeasonalNaive": 1.1684284723275706,
+        "AutoARIMA": 0.876575513559111,
+        "SimpleExponentialSmoothing": 1.1457244989718272,
+        "AutoTheta": 0.8575262338356905
+      },
+      "order": [
+        "AutoTheta",
+        "Naive",
+        "AutoARIMA",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ],
+      "pairs": {
+        "HistoricAverage - Naive": {
+          "est": 0.9928799413231228,
+          "lo": 0.9712714740603856,
+          "hi": 1.0143593585020152,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SeasonalNaive": {
+          "est": 0.697498219863613,
+          "lo": 0.6771434073932916,
+          "hi": 0.7164009886058533,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoARIMA": {
+          "est": 0.9893511786320727,
+          "lo": 0.9677755883706667,
+          "hi": 1.0101048199699212,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SimpleExponentialSmoothing": {
+          "est": 0.7202021932193565,
+          "lo": 0.7028996211663231,
+          "hi": 0.735736415246022,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoTheta": {
+          "est": 1.008400458355493,
+          "lo": 0.9871211374226058,
+          "hi": 1.0285246143365165,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SeasonalNaive": {
+          "est": -0.2953817214595098,
+          "lo": -0.3069530271563198,
+          "hi": -0.28415593208770684,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoARIMA": {
+          "est": -0.00352876269105018,
+          "lo": -0.009096697540703335,
+          "hi": 0.0019162871797646296,
+          "share_reps_i_better": 0.895
+        },
+        "Naive - SimpleExponentialSmoothing": {
+          "est": -0.2726777481037663,
+          "lo": -0.28476598170916473,
+          "hi": -0.26073587746433624,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoTheta": {
+          "est": 0.01552051703237034,
+          "lo": 0.010510173720091096,
+          "hi": 0.020315619047374917,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoARIMA": {
+          "est": 0.2918529587684596,
+          "lo": 0.2832769491361095,
+          "hi": 0.30107957873483954,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - SimpleExponentialSmoothing": {
+          "est": 0.02270397335574348,
+          "lo": 0.01448725776178716,
+          "hi": 0.030769132062122832,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoTheta": {
+          "est": 0.31090223849188015,
+          "lo": 0.30169149079337065,
+          "hi": 0.32011460870316016,
+          "share_reps_i_better": 0.0
+        },
+        "AutoARIMA - SimpleExponentialSmoothing": {
+          "est": -0.26914898541271615,
+          "lo": -0.27929899293907207,
+          "hi": -0.25939414460003163,
+          "share_reps_i_better": 1.0
+        },
+        "AutoARIMA - AutoTheta": {
+          "est": 0.01904927972342052,
+          "lo": 0.015173050807699198,
+          "hi": 0.022831154594034283,
+          "share_reps_i_better": 0.0
+        },
+        "SimpleExponentialSmoothing - AutoTheta": {
+          "est": 0.28819826513613667,
+          "lo": 0.2780882163737717,
+          "hi": 0.2979864457630896,
+          "share_reps_i_better": 0.0
+        }
+      },
+      "p_first": {
+        "HistoricAverage": 0.0,
+        "Naive": 0.0,
+        "SeasonalNaive": 0.0,
+        "AutoARIMA": 0.0,
+        "SimpleExponentialSmoothing": 0.0,
+        "AutoTheta": 1.0
+      }
+    }
+  },
+  "entrants_arm_b": {
+    "retained_on_A": {
+      "n_entities": 4001,
+      "mean": {
+        "HistoricAverage": 1.7444055412783364,
+        "Naive": 0.8836319437073834,
+        "SeasonalNaive": 1.2442597803028759,
+        "AutoARIMA": 0.9419562159204361,
+        "SimpleExponentialSmoothing": 1.2073543980573043,
+        "AutoTheta": 0.9102761300981774
+      },
+      "order": [
+        "Naive",
+        "AutoTheta",
+        "AutoARIMA",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ],
+      "pairs": {
+        "HistoricAverage - Naive": {
+          "est": 0.860773597570953,
+          "lo": 0.8159886029912423,
+          "hi": 0.9072742929874537,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SeasonalNaive": {
+          "est": 0.5001457609754605,
+          "lo": 0.462394023075408,
+          "hi": 0.5392395335325673,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoARIMA": {
+          "est": 0.8024493253579003,
+          "lo": 0.7622314704765139,
+          "hi": 0.843841220497435,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SimpleExponentialSmoothing": {
+          "est": 0.5370511432210321,
+          "lo": 0.5100043376175534,
+          "hi": 0.5672359570684112,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoTheta": {
+          "est": 0.8341294111801589,
+          "lo": 0.7914135957611661,
+          "hi": 0.8781888488702574,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SeasonalNaive": {
+          "est": -0.36062783659549247,
+          "lo": -0.3903741443822611,
+          "hi": -0.33126441394260575,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoARIMA": {
+          "est": -0.0583242722130527,
+          "lo": -0.07572182888483457,
+          "hi": -0.04239914220246862,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - SimpleExponentialSmoothing": {
+          "est": -0.32372245434992086,
+          "lo": -0.3540768207092216,
+          "hi": -0.2934112264363649,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoTheta": {
+          "est": -0.026644186390794022,
+          "lo": -0.03901170092199292,
+          "hi": -0.014855314327291189,
+          "share_reps_i_better": 1.0
+        },
+        "SeasonalNaive - AutoARIMA": {
+          "est": 0.30230356438243977,
+          "lo": 0.28000203662201323,
+          "hi": 0.32429521338150497,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - SimpleExponentialSmoothing": {
+          "est": 0.036905382245571605,
+          "lo": 0.01950341094619352,
+          "hi": 0.054706586021436326,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoTheta": {
+          "est": 0.33398365020469845,
+          "lo": 0.3090261161118974,
+          "hi": 0.358548490456373,
+          "share_reps_i_better": 0.0
+        },
+        "AutoARIMA - SimpleExponentialSmoothing": {
+          "est": -0.26539818213686817,
+          "lo": -0.28842046062370635,
+          "hi": -0.24134579599974776,
+          "share_reps_i_better": 1.0
+        },
+        "AutoARIMA - AutoTheta": {
+          "est": 0.031680085822258675,
+          "lo": 0.01939724400202245,
+          "hi": 0.044473196826051616,
+          "share_reps_i_better": 0.0
+        },
+        "SimpleExponentialSmoothing - AutoTheta": {
+          "est": 0.29707826795912684,
+          "lo": 0.27031262143540524,
+          "hi": 0.32335112302076907,
+          "share_reps_i_better": 0.0
+        }
+      },
+      "p_first": {
+        "HistoricAverage": 0.0,
+        "Naive": 1.0,
+        "SeasonalNaive": 0.0,
+        "AutoARIMA": 0.0,
+        "SimpleExponentialSmoothing": 0.0,
+        "AutoTheta": 0.0
+      }
+    },
+    "excluded_from_A": {
+      "n_entities": 2190,
+      "mean": {
+        "HistoricAverage": 1.7270968838625194,
+        "Naive": 0.8752999744038981,
+        "SeasonalNaive": 1.1892862659260475,
+        "AutoARIMA": 0.9280652919112502,
+        "SimpleExponentialSmoothing": 1.1711386067045053,
+        "AutoTheta": 0.9030458481781927
+      },
+      "order": [
+        "Naive",
+        "AutoTheta",
+        "AutoARIMA",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ],
+      "pairs": {
+        "HistoricAverage - Naive": {
+          "est": 0.8517969094586213,
+          "lo": 0.7905075038459264,
+          "hi": 0.9130950354441878,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SeasonalNaive": {
+          "est": 0.5378106179364719,
+          "lo": 0.4838525820633886,
+          "hi": 0.5914113062550904,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoARIMA": {
+          "est": 0.7990315919512692,
+          "lo": 0.7422594863636838,
+          "hi": 0.8578256496683025,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SimpleExponentialSmoothing": {
+          "est": 0.555958277158014,
+          "lo": 0.5112042387049217,
+          "hi": 0.6017288254632422,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoTheta": {
+          "est": 0.8240510356843267,
+          "lo": 0.7688489670318808,
+          "hi": 0.8834090942778733,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SeasonalNaive": {
+          "est": -0.3139862915221494,
+          "lo": -0.3494567039841761,
+          "hi": -0.27768141187778866,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoARIMA": {
+          "est": -0.05276531750735214,
+          "lo": -0.06851825803895822,
+          "hi": -0.03702444938907011,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - SimpleExponentialSmoothing": {
+          "est": -0.29583863230060725,
+          "lo": -0.3322934273748237,
+          "hi": -0.2598435068052967,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoTheta": {
+          "est": -0.027745873774294605,
+          "lo": -0.04082924237348916,
+          "hi": -0.014549733779047985,
+          "share_reps_i_better": 1.0
+        },
+        "SeasonalNaive - AutoARIMA": {
+          "est": 0.26122097401479727,
+          "lo": 0.2320527222373238,
+          "hi": 0.28976046667214483,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - SimpleExponentialSmoothing": {
+          "est": 0.018147659221542156,
+          "lo": -0.005303962100145642,
+          "hi": 0.042201666988733594,
+          "share_reps_i_better": 0.065
+        },
+        "SeasonalNaive - AutoTheta": {
+          "est": 0.2862404177478548,
+          "lo": 0.25459750363193284,
+          "hi": 0.31743394920169843,
+          "share_reps_i_better": 0.0
+        },
+        "AutoARIMA - SimpleExponentialSmoothing": {
+          "est": -0.2430733147932551,
+          "lo": -0.27386345986593724,
+          "hi": -0.2136673078984491,
+          "share_reps_i_better": 1.0
+        },
+        "AutoARIMA - AutoTheta": {
+          "est": 0.025019443733057534,
+          "lo": 0.012196684179408385,
+          "hi": 0.038194056846251385,
+          "share_reps_i_better": 0.0
+        },
+        "SimpleExponentialSmoothing - AutoTheta": {
+          "est": 0.26809275852631265,
+          "lo": 0.2371693542873673,
+          "hi": 0.299824881978093,
+          "share_reps_i_better": 0.0
+        }
+      },
+      "p_first": {
+        "HistoricAverage": 0.0,
+        "Naive": 1.0,
+        "SeasonalNaive": 0.0,
+        "AutoARIMA": 0.0,
+        "SimpleExponentialSmoothing": 0.0,
+        "AutoTheta": 0.0
+      }
+    },
+    "incumbents_1976": {
+      "n_entities": 13376,
+      "mean": {
+        "HistoricAverage": 1.9250058941231605,
+        "Naive": 0.8695116195811537,
+        "SeasonalNaive": 1.1423310118618226,
+        "AutoARIMA": 0.848588760812482,
+        "SimpleExponentialSmoothing": 1.123128945579523,
+        "AutoTheta": 0.83429505184135
+      },
+      "order": [
+        "AutoTheta",
+        "AutoARIMA",
+        "Naive",
+        "SimpleExponentialSmoothing",
+        "SeasonalNaive",
+        "HistoricAverage"
+      ],
+      "pairs": {
+        "HistoricAverage - Naive": {
+          "est": 1.0554942745420068,
+          "lo": 1.0277982418591585,
+          "hi": 1.0816880250488812,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SeasonalNaive": {
+          "est": 0.7826748822613379,
+          "lo": 0.7574994420250953,
+          "hi": 0.8074463746737999,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoARIMA": {
+          "est": 1.0764171333106785,
+          "lo": 1.0490128028023675,
+          "hi": 1.102315353227758,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - SimpleExponentialSmoothing": {
+          "est": 0.8018769485436374,
+          "lo": 0.7805921835311802,
+          "hi": 0.8224514185030031,
+          "share_reps_i_better": 0.0
+        },
+        "HistoricAverage - AutoTheta": {
+          "est": 1.0907108422818106,
+          "lo": 1.064141467719144,
+          "hi": 1.115689014244778,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SeasonalNaive": {
+          "est": -0.27281939228066887,
+          "lo": -0.2855033894441648,
+          "hi": -0.25991188172587315,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoARIMA": {
+          "est": 0.020922858768671726,
+          "lo": 0.015374455629308111,
+          "hi": 0.02670996474590961,
+          "share_reps_i_better": 0.0
+        },
+        "Naive - SimpleExponentialSmoothing": {
+          "est": -0.2536173259983693,
+          "lo": -0.26789182248258697,
+          "hi": -0.2397931546002905,
+          "share_reps_i_better": 1.0
+        },
+        "Naive - AutoTheta": {
+          "est": 0.03521656773980375,
+          "lo": 0.02987662184747191,
+          "hi": 0.040933926353361634,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoARIMA": {
+          "est": 0.2937422510493406,
+          "lo": 0.2834864937774114,
+          "hi": 0.30402428936791004,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - SimpleExponentialSmoothing": {
+          "est": 0.01920206628229959,
+          "lo": 0.00946917871665674,
+          "hi": 0.02900917770921049,
+          "share_reps_i_better": 0.0
+        },
+        "SeasonalNaive - AutoTheta": {
+          "est": 0.3080359600204726,
+          "lo": 0.29781676282294783,
+          "hi": 0.3184213970922097,
+          "share_reps_i_better": 0.0
+        },
+        "AutoARIMA - SimpleExponentialSmoothing": {
+          "est": -0.274540184767041,
+          "lo": -0.28654566767349665,
+          "hi": -0.2626431817015767,
+          "share_reps_i_better": 1.0
+        },
+        "AutoARIMA - AutoTheta": {
+          "est": 0.014293708971132024,
+          "lo": 0.010468338766779389,
+          "hi": 0.018164644994330847,
+          "share_reps_i_better": 0.0
+        },
+        "SimpleExponentialSmoothing - AutoTheta": {
+          "est": 0.28883389373817303,
+          "lo": 0.2770300550602182,
+          "hi": 0.30043600627015504,
+          "share_reps_i_better": 0.0
+        }
+      },
+      "p_first": {
+        "HistoricAverage": 0.0,
+        "Naive": 0.0,
+        "SeasonalNaive": 0.0,
+        "AutoARIMA": 0.0,
+        "SimpleExponentialSmoothing": 0.0,
+        "AutoTheta": 1.0
+      }
+    },
+    "n_entrants": 6191,
+    "share_entrants_excluded": 0.3537392989823938
+  },
+  "notes": "Exploratory, specified after post-hoc results were seen; saved forecasts only; seed 20261118."
+}
