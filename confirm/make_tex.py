@@ -25,8 +25,7 @@ def main() -> int:
     res = {}
     for k in ORDER:
         p = src / ("discovery_analysis.json" if k == "discovery" else f"{k}_analysis.json")
-        if p.exists():
-            res[k] = json.loads(p.read_text(encoding="utf-8"))
+        res[k] = json.loads(p.read_text(encoding="utf-8"))
     GEN.mkdir(parents=True, exist_ok=True)
 
     cov = []

@@ -1,3 +1,7 @@
 pytest
 PyYAML
 pandas
+scipy
+polars
+pyarrow
+utilsforecast

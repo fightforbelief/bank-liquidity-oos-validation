@@ -2,15 +2,16 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import importlib.util
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-SCRATCH = Path(r"C:\Users\hanqi\Desktop\projects\_p12_audit_scratch")
-DTA = SCRATCH / "extract" / "callreports_1976_2020_WRDS.dta"
-RUNS = Path(r"C:\Users\hanqi\Desktop\projects\_p12_confirm_runs")
-DISCOVERY_RUN = Path(r"C:\Users\hanqi\Desktop\projects\_p12_stage18_full_run\run_20261028")
+SCRATCH = Path(os.environ.get("P12_SCRATCH", r"C:\Users\hanqi\Desktop\projects\_p12_audit_scratch"))
+DTA = Path(os.environ.get("P12_DTA", SCRATCH / "extract" / "callreports_1976_2020_WRDS.dta"))
+RUNS = Path(os.environ.get("P12_RUNS", r"C:\Users\hanqi\Desktop\projects\_p12_confirm_runs"))
+DISCOVERY_RUN = Path(os.environ.get("P12_DISCOVERY_RUN", r"C:\Users\hanqi\Desktop\projects\_p12_stage18_full_run\run_20261028"))
 PROTOCOL = REPO / "confirm" / "PROTOCOL.md"
 
 LABEL = "CONFIRMATORY_QE_REPLICATION_RUN"
@@ -34,7 +35,7 @@ def sha256(path: Path) -> str:
 
 def stage10():
     """The frozen Stage 10 module: upstream build_canonical_grid, quarter_grid, screen, imputation."""
-    spec = importlib.util.spec_from_file_location("stage10_dry_run", SCRATCH / "stage10_dry_run.py")
+    spec = importlib.util.spec_from_file_location("stage10_dry_run", Path(__file__).with_name("stage10_grid.py"))
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
